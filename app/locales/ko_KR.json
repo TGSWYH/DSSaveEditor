@@ -1,0 +1,95 @@
+{
+  "app_title": "드래곤소드 세이브 에디터",
+  "app_subtitle": "DragonSword: Awakening Save Editor",
+
+  "menu": {
+    "open": "세이브 열기",
+    "backup": "백업",
+    "restore": "백업 복원",
+    "save": "변경 저장",
+    "refresh": "새로고침",
+    "settings": "설정"
+  },
+
+  "status": {
+    "ready": "준비됨",
+    "loaded": "로드됨: {path}（{count}개 테이블）",
+    "no_db": "세이브가 로드되지 않았습니다. '세이브 열기'를 클릭하세요",
+    "saved": "저장 성공（원본은 자동 백업됨）",
+    "backup_done": "백업 완료: {path}",
+    "restore_done": "복원 완료",
+    "saving": "저장 중…",
+    "error": "오류",
+    "success": "성공"
+  },
+
+  "tabs": {
+    "character": "캐릭터",
+    "currency": "화폐",
+    "equipment": "장비",
+    "item": "아이템",
+    "vehicle": "탈것과 외형",
+    "skill": "스킬과 칭호",
+    "quest": "퀘스트",
+    "player": "플레이어 정보",
+    "all_tables": "전체 테이블"
+  },
+
+  "table": {
+    "all_tables_label": "테이블 선택:",
+    "add_row": "행 추가",
+    "delete_row": "선택 행 삭제",
+    "hint": "셀을 더블클릭하여 편집",
+    "no_pk": "기본 키가 없는 테이블입니다. 추가/삭제 불가",
+    "edit_title": "셀 편집",
+    "edit_label": "새 값:",
+    "invalid_number": "숫자 형식이 유효하지 않아 되돌렸습니다",
+    "column_name": "이름"
+  },
+
+  "currency": {
+    "apply": "화폐 변경 적용",
+    "modified": "화폐가 업데이트되었습니다",
+    "label": "{name}:"
+  },
+
+  "character": {
+    "role_id": "캐릭터 ID",
+    "level": "레벨",
+    "exp": "경험치",
+    "ascend": "승급",
+    "transcend": "초월",
+    "hp": "HP",
+    "soldier_grade": "병종 등급",
+    "apply": "캐릭터 변경 적용",
+    "modified": "캐릭터 데이터가 업데이트되었습니다",
+    "no_character": "캐릭터 데이터가 없습니다"
+  },
+
+  "dialogs": {
+    "confirm": "확인",
+    "ok": "확인",
+    "cancel": "취소",
+    "yes": "예",
+    "no": "아니요",
+    "backup_confirm": "현재 세이브를 백업하시겠습니까?",
+    "restore_confirm": "백업으로 현재 세이브를 덮어씁니다. 계속하시겠습니까?\n（현재 파일이 교체됩니다. 백업 여부를 확인하세요）",
+    "save_confirm": "저장하면 원본 세이브 파일에 암호화되어 기록됩니다. 계속하시겠습니까?",
+    "open_title": "세이브 파일 선택",
+    "file_filter": "세이브 파일 (*.db);;모든 파일 (*.*)",
+    "unsupported_file": "유효한 세이브 파일이 아닙니다",
+    "no_backup": "백업 파일을 찾을 수 없습니다（.db.backup）",
+    "restore_need_reload": "복원 완료. 세이브를 다시 열어 데이터를 확인하세요"
+  },
+
+  "settings": {
+    "title": "설정",
+    "language": "언어",
+    "language_desc": "언어 변경은 재시작 후 적용됩니다",
+    "theme": "테마",
+    "theme_dark": "다크",
+    "theme_light": "라이트",
+    "save": "설정 저장",
+    "saved": "설정이 저장되었습니다"
+  }
+}

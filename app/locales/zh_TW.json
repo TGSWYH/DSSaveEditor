@@ -1,0 +1,95 @@
+{
+  "app_title": "龍之劍覺醒 存檔修改器",
+  "app_subtitle": "DragonSword: Awakening Save Editor",
+
+  "menu": {
+    "open": "開啟存檔",
+    "backup": "一鍵備份",
+    "restore": "還原備份",
+    "save": "儲存修改",
+    "refresh": "重新整理",
+    "settings": "設定"
+  },
+
+  "status": {
+    "ready": "就緒",
+    "loaded": "已載入：{path}（{count} 個資料表）",
+    "no_db": "尚未載入存檔，請先點「開啟存檔」",
+    "saved": "儲存成功（已自動備份原存檔）",
+    "backup_done": "備份完成：{path}",
+    "restore_done": "還原完成",
+    "saving": "正在儲存…",
+    "error": "錯誤",
+    "success": "成功"
+  },
+
+  "tabs": {
+    "character": "角色",
+    "currency": "貨幣",
+    "equipment": "裝備",
+    "item": "物品",
+    "vehicle": "坐騎與外觀",
+    "skill": "技能與稱號",
+    "quest": "任務",
+    "player": "玩家資訊",
+    "all_tables": "全部資料表"
+  },
+
+  "table": {
+    "all_tables_label": "選擇資料表：",
+    "add_row": "新增列",
+    "delete_row": "刪除選取列",
+    "hint": "雙擊儲存格編輯數值",
+    "no_pk": "此表無主鍵，不支援新增/刪除",
+    "edit_title": "編輯儲存格",
+    "edit_label": "新值：",
+    "invalid_number": "數值格式無效，已還原",
+    "column_name": "名稱"
+  },
+
+  "currency": {
+    "apply": "套用貨幣修改",
+    "modified": "貨幣已更新",
+    "label": "{name}："
+  },
+
+  "character": {
+    "role_id": "角色ID",
+    "level": "等級",
+    "exp": "經驗",
+    "ascend": "飛升",
+    "transcend": "超越",
+    "hp": "HP",
+    "soldier_grade": "兵種等級",
+    "apply": "套用角色修改",
+    "modified": "角色資料已更新",
+    "no_character": "尚無角色資料"
+  },
+
+  "dialogs": {
+    "confirm": "確認",
+    "ok": "確定",
+    "cancel": "取消",
+    "yes": "是",
+    "no": "否",
+    "backup_confirm": "確定要備份目前存檔嗎？",
+    "restore_confirm": "將以備份檔覆蓋目前存檔，確定繼續？\n（原存檔會被替換，請確認已備份）",
+    "save_confirm": "儲存後將加密寫回原存檔檔案，確定繼續？",
+    "open_title": "選擇存檔檔案",
+    "file_filter": "存檔檔案 (*.db);;所有檔案 (*.*)",
+    "unsupported_file": "不是有效的存檔檔案",
+    "no_backup": "找不到備份檔（.db.backup）",
+    "restore_need_reload": "還原完成，請重新開啟存檔以檢視資料"
+  },
+
+  "settings": {
+    "title": "設定",
+    "language": "介面語言",
+    "language_desc": "切換語言後需重新啟動生效",
+    "theme": "介面主題",
+    "theme_dark": "深色",
+    "theme_light": "淺色",
+    "save": "儲存設定",
+    "saved": "設定已儲存"
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "app_title": "DragonSword: Awakening Speicher-Editor",
+  "app_subtitle": "DragonSword: Awakening Save Editor",
+
+  "menu": {
+    "open": "Speicher öffnen",
+    "backup": "Sichern",
+    "restore": "Sicherung wiederherstellen",
+    "save": "Änderungen speichern",
+    "refresh": "Aktualisieren",
+    "settings": "Einstellungen"
+  },
+
+  "status": {
+    "ready": "Bereit",
+    "loaded": "Geladen: {path} ({count} Tabellen)",
+    "no_db": "Kein Speicher geladen. Klicken Sie auf „Speicher öffnen“",
+    "saved": "Erfolgreich gespeichert (Original wurde gesichert)",
+    "backup_done": "Sicherung erstellt: {path}",
+    "restore_done": "Wiederherstellung abgeschlossen",
+    "saving": "Speichern…",
+    "error": "Fehler",
+    "success": "Erfolg"
+  },
+
+  "tabs": {
+    "character": "Charaktere",
+    "currency": "Währung",
+    "equipment": "Ausrüstung",
+    "item": "Gegenstände",
+    "vehicle": "Reittiere & Optik",
+    "skill": "Fähigkeiten & Titel",
+    "quest": "Quests",
+    "player": "Spielerinfo",
+    "all_tables": "Alle Tabellen"
+  },
+
+  "table": {
+    "all_tables_label": "Tabelle:",
+    "add_row": "Zeile hinzufügen",
+    "delete_row": "Auswahl löschen",
+    "hint": "Doppelklick zum Bearbeiten",
+    "no_pk": "Tabelle ohne Primärschlüssel; Hinzufügen/Löschen deaktiviert",
+    "edit_title": "Zelle bearbeiten",
+    "edit_label": "Neuer Wert:",
+    "invalid_number": "Ungültiger Zahlenwert, rückgängig gemacht",
+    "column_name": "Name"
+  },
+
+  "currency": {
+    "apply": "Währungsänderungen übernehmen",
+    "modified": "Währung aktualisiert",
+    "label": "{name}:"
+  },
+
+  "character": {
+    "role_id": "Char-ID",
+    "level": "Level",
+    "exp": "EP",
+    "ascend": "Aufstieg",
+    "transcend": "Transzendenz",
+    "hp": "HP",
+    "soldier_grade": "Soldatenrang",
+    "apply": "Charakteränderungen übernehmen",
+    "modified": "Charakterdaten aktualisiert",
+    "no_character": "Keine Charakterdaten"
+  },
+
+  "dialogs": {
+    "confirm": "Bestätigen",
+    "ok": "OK",
+    "cancel": "Abbrechen",
+    "yes": "Ja",
+    "no": "Nein",
+    "backup_confirm": "Aktuellen Speicher sichern?",
+    "restore_confirm": "Der Speicher wird mit der Sicherung überschrieben. Fortfahren?\n(Die aktuelle Datei wird ersetzt; stellen Sie sicher, dass sie gesichert ist)",
+    "save_confirm": "Änderungen werden verschlüsselt in den Speicher geschrieben. Fortfahren?",
+    "open_title": "Speicherdatei wählen",
+    "file_filter": "Speicherdateien (*.db);;Alle Dateien (*.*)",
+    "unsupported_file": "Keine gültige Speicherdatei",
+    "no_backup": "Keine Sicherungsdatei gefunden (.db.backup)",
+    "restore_need_reload": "Wiederherstellung abgeschlossen. Öffnen Sie den Speicher erneut, um die Daten zu sehen"
+  },
+
+  "settings": {
+    "title": "Einstellungen",
+    "language": "Sprache",
+    "language_desc": "Neustart nach Sprachwechsel erforderlich",
+    "theme": "Design",
+    "theme_dark": "Dunkel",
+    "theme_light": "Hell",
+    "save": "Einstellungen speichern",
+    "saved": "Einstellungen gespeichert"
+  }
+}

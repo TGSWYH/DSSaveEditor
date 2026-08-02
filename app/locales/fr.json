@@ -1,0 +1,95 @@
+{
+  "app_title": "Éditeur de sauvegarde DragonSword: Awakening",
+  "app_subtitle": "DragonSword: Awakening Save Editor",
+
+  "menu": {
+    "open": "Ouvrir la sauvegarde",
+    "backup": "Sauvegarder",
+    "restore": "Restaurer la sauvegarde",
+    "save": "Enregistrer les modifications",
+    "refresh": "Actualiser",
+    "settings": "Paramètres"
+  },
+
+  "status": {
+    "ready": "Prêt",
+    "loaded": "Chargé : {path} ({count} tables)",
+    "no_db": "Aucune sauvegarde chargée. Cliquez sur « Ouvrir la sauvegarde »",
+    "saved": "Enregistré (original sauvegardé)",
+    "backup_done": "Sauvegarde créée : {path}",
+    "restore_done": "Restauration terminée",
+    "saving": "Enregistrement…",
+    "error": "Erreur",
+    "success": "Succès"
+  },
+
+  "tabs": {
+    "character": "Personnages",
+    "currency": "Devises",
+    "equipment": "Équipement",
+    "item": "Objets",
+    "vehicle": "Montures & Apparence",
+    "skill": "Compétences & Titres",
+    "quest": "Quêtes",
+    "player": "Infos joueur",
+    "all_tables": "Toutes les tables"
+  },
+
+  "table": {
+    "all_tables_label": "Table :",
+    "add_row": "Ajouter une ligne",
+    "delete_row": "Supprimer la sélection",
+    "hint": "Double-cliquez pour modifier",
+    "no_pk": "Table sans clé primaire ; ajout/suppression désactivés",
+    "edit_title": "Modifier la cellule",
+    "edit_label": "Nouvelle valeur :",
+    "invalid_number": "Valeur numérique invalide, annulée",
+    "column_name": "Nom"
+  },
+
+  "currency": {
+    "apply": "Appliquer les changements",
+    "modified": "Devises mises à jour",
+    "label": "{name} :"
+  },
+
+  "character": {
+    "role_id": "ID perso",
+    "level": "Niveau",
+    "exp": "EXP",
+    "ascend": "Ascension",
+    "transcend": "Transcendance",
+    "hp": "PV",
+    "soldier_grade": "Grade soldat",
+    "apply": "Appliquer les changements",
+    "modified": "Données du personnage mises à jour",
+    "no_character": "Aucune donnée de personnage"
+  },
+
+  "dialogs": {
+    "confirm": "Confirmer",
+    "ok": "OK",
+    "cancel": "Annuler",
+    "yes": "Oui",
+    "no": "Non",
+    "backup_confirm": "Sauvegarder le fichier actuel ?",
+    "restore_confirm": "La sauvegarde écrasera le fichier actuel. Continuer ?\n(Le fichier actuel sera remplacé ; vérifiez qu'il est sauvegardé)",
+    "save_confirm": "Les modifications seront chiffrées et écrites dans la sauvegarde. Continuer ?",
+    "open_title": "Sélectionner la sauvegarde",
+    "file_filter": "Fichiers de sauvegarde (*.db);;Tous les fichiers (*.*)",
+    "unsupported_file": "Fichier de sauvegarde invalide",
+    "no_backup": "Aucune sauvegarde trouvée (.db.backup)",
+    "restore_need_reload": "Restauration terminée. Rouvrez la sauvegarde pour voir les données"
+  },
+
+  "settings": {
+    "title": "Paramètres",
+    "language": "Langue",
+    "language_desc": "Redémarrage requis après changement de langue",
+    "theme": "Thème",
+    "theme_dark": "Sombre",
+    "theme_light": "Clair",
+    "save": "Enregistrer les paramètres",
+    "saved": "Paramètres enregistrés"
+  }
+}

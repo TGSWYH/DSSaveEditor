@@ -1,0 +1,95 @@
+{
+  "app_title": "Editor de guardado DragonSword: Awakening",
+  "app_subtitle": "DragonSword: Awakening Save Editor",
+
+  "menu": {
+    "open": "Abrir guardado",
+    "backup": "Copia de seguridad",
+    "restore": "Restaurar copia",
+    "save": "Guardar cambios",
+    "refresh": "Actualizar",
+    "settings": "Ajustes"
+  },
+
+  "status": {
+    "ready": "Listo",
+    "loaded": "Cargado: {path} ({count} tablas)",
+    "no_db": "No hay guardado cargado. Haga clic en «Abrir guardado»",
+    "saved": "Guardado correctamente (original respaldado)",
+    "backup_done": "Copia creada: {path}",
+    "restore_done": "Restauración completada",
+    "saving": "Guardando…",
+    "error": "Error",
+    "success": "Éxito"
+  },
+
+  "tabs": {
+    "character": "Personajes",
+    "currency": "Moneda",
+    "equipment": "Equipo",
+    "item": "Objetos",
+    "vehicle": "Monturas y aspecto",
+    "skill": "Habilidades y títulos",
+    "quest": "Misiones",
+    "player": "Información del jugador",
+    "all_tables": "Todas las tablas"
+  },
+
+  "table": {
+    "all_tables_label": "Tabla:",
+    "add_row": "Añadir fila",
+    "delete_row": "Eliminar selección",
+    "hint": "Doble clic para editar",
+    "no_pk": "Tabla sin clave primaria; añadir/eliminar desactivado",
+    "edit_title": "Editar celda",
+    "edit_label": "Nuevo valor:",
+    "invalid_number": "Valor numérico no válido, revertido",
+    "column_name": "Nombre"
+  },
+
+  "currency": {
+    "apply": "Aplicar cambios de moneda",
+    "modified": "Moneda actualizada",
+    "label": "{name}:"
+  },
+
+  "character": {
+    "role_id": "ID personaje",
+    "level": "Nivel",
+    "exp": "EXP",
+    "ascend": "Ascenso",
+    "transcend": "Trascendencia",
+    "hp": "PS",
+    "soldier_grade": "Grado de soldado",
+    "apply": "Aplicar cambios de personaje",
+    "modified": "Datos del personaje actualizados",
+    "no_character": "Sin datos de personaje"
+  },
+
+  "dialogs": {
+    "confirm": "Confirmar",
+    "ok": "Aceptar",
+    "cancel": "Cancelar",
+    "yes": "Sí",
+    "no": "No",
+    "backup_confirm": "¿Hacer copia del guardado actual?",
+    "restore_confirm": "El guardado será sobrescrito con la copia. ¿Continuar?\n(El archivo actual será reemplazado; asegúrese de tener copia)",
+    "save_confirm": "Los cambios se escribirán cifrados en el guardado. ¿Continuar?",
+    "open_title": "Seleccionar archivo de guardado",
+    "file_filter": "Archivos de guardado (*.db);;Todos los archivos (*.*)",
+    "unsupported_file": "No es un archivo de guardado válido",
+    "no_backup": "No se encontró copia (.db.backup)",
+    "restore_need_reload": "Restauración completa. Reabra el guardado para ver los datos"
+  },
+
+  "settings": {
+    "title": "Ajustes",
+    "language": "Idioma",
+    "language_desc": "Reinicio necesario tras cambiar idioma",
+    "theme": "Tema",
+    "theme_dark": "Oscuro",
+    "theme_light": "Claro",
+    "save": "Guardar ajustes",
+    "saved": "Ajustes guardados"
+  }
+}

@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# 用户配置与运行时文件
+config.json
+*.backup
+*.db.backup
+
+# 存档样本 (含玩家数据, 不应提交)
+107114809/
+
+# 开发辅助
+.opencode/
+*.db.decrypted

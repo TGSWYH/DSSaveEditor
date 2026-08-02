@@ -1,0 +1,95 @@
+{
+  "app_title": "ドラゴンソード セーブエディター",
+  "app_subtitle": "DragonSword: Awakening Save Editor",
+
+  "menu": {
+    "open": "セーブを開く",
+    "backup": "バックアップ",
+    "restore": "バックアップを復元",
+    "save": "変更を保存",
+    "refresh": "更新",
+    "settings": "設定"
+  },
+
+  "status": {
+    "ready": "準備完了",
+    "loaded": "読み込み完了：{path}（{count} テーブル）",
+    "no_db": "セーブが読み込まれていません。「セーブを開く」をクリックしてください",
+    "saved": "保存成功（元ファイルは自動バックアップ済み）",
+    "backup_done": "バックアップ完了：{path}",
+    "restore_done": "復元完了",
+    "saving": "保存中…",
+    "error": "エラー",
+    "success": "成功"
+  },
+
+  "tabs": {
+    "character": "キャラクター",
+    "currency": "通貨",
+    "equipment": "装備",
+    "item": "アイテム",
+    "vehicle": "乗り物と外観",
+    "skill": "スキルと称号",
+    "quest": "クエスト",
+    "player": "プレイヤー情報",
+    "all_tables": "全テーブル"
+  },
+
+  "table": {
+    "all_tables_label": "テーブル選択：",
+    "add_row": "行を追加",
+    "delete_row": "選択行を削除",
+    "hint": "セルをダブルクリックで編集",
+    "no_pk": "主キーのないテーブルです。追加・削除不可",
+    "edit_title": "セル編集",
+    "edit_label": "新しい値：",
+    "invalid_number": "数値形式が無効です。元に戻しました",
+    "column_name": "名前"
+  },
+
+  "currency": {
+    "apply": "通貨変更を適用",
+    "modified": "通貨を更新しました",
+    "label": "{name}："
+  },
+
+  "character": {
+    "role_id": "キャラID",
+    "level": "レベル",
+    "exp": "経験値",
+    "ascend": "飛昇",
+    "transcend": "超越",
+    "hp": "HP",
+    "soldier_grade": "兵種等級",
+    "apply": "キャラ変更を適用",
+    "modified": "キャラクターデータを更新しました",
+    "no_character": "キャラクターデータがありません"
+  },
+
+  "dialogs": {
+    "confirm": "確認",
+    "ok": "OK",
+    "cancel": "キャンセル",
+    "yes": "はい",
+    "no": "いいえ",
+    "backup_confirm": "現在のセーブをバックアップしますか？",
+    "restore_confirm": "バックアップで現在のセーブを上書きします。続行しますか？\n（現在のファイルは置き換えられます。バックアップ済みか確認してください）",
+    "save_confirm": "保存すると元のセーブファイルに暗号化して書き戻します。続行しますか？",
+    "open_title": "セーブファイルを選択",
+    "file_filter": "セーブファイル (*.db);;すべてのファイル (*.*)",
+    "unsupported_file": "有効なセーブファイルではありません",
+    "no_backup": "バックアップファイルが見つかりません（.db.backup）",
+    "restore_need_reload": "復元完了。セーブを開き直してデータを確認してください"
+  },
+
+  "settings": {
+    "title": "設定",
+    "language": "言語",
+    "language_desc": "言語の変更は再起動後に反映されます",
+    "theme": "テーマ",
+    "theme_dark": "ダーク",
+    "theme_light": "ライト",
+    "save": "設定を保存",
+    "saved": "設定を保存しました"
+  }
+}

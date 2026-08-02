@@ -1,0 +1,95 @@
+{
+  "app_title": "Editor de save DragonSword: Awakening",
+  "app_subtitle": "DragonSword: Awakening Save Editor",
+
+  "menu": {
+    "open": "Abrir save",
+    "backup": "Backup",
+    "restore": "Restaurar backup",
+    "save": "Salvar alterações",
+    "refresh": "Atualizar",
+    "settings": "Configurações"
+  },
+
+  "status": {
+    "ready": "Pronto",
+    "loaded": "Carregado: {path} ({count} tabelas)",
+    "no_db": "Nenhum save carregado. Clique em \"Abrir save\"",
+    "saved": "Salvo com sucesso (original com backup)",
+    "backup_done": "Backup criado: {path}",
+    "restore_done": "Restauração concluída",
+    "saving": "Salvando…",
+    "error": "Erro",
+    "success": "Sucesso"
+  },
+
+  "tabs": {
+    "character": "Personagens",
+    "currency": "Moeda",
+    "equipment": "Equipamento",
+    "item": "Itens",
+    "vehicle": "Montarias e aparência",
+    "skill": "Habilidades e títulos",
+    "quest": "Missões",
+    "player": "Informações do jogador",
+    "all_tables": "Todas as tabelas"
+  },
+
+  "table": {
+    "all_tables_label": "Tabela:",
+    "add_row": "Adicionar linha",
+    "delete_row": "Excluir seleção",
+    "hint": "Clique duas vezes para editar",
+    "no_pk": "Tabela sem chave primária; adicionar/excluir desativado",
+    "edit_title": "Editar célula",
+    "edit_label": "Novo valor:",
+    "invalid_number": "Valor numérico inválido, revertido",
+    "column_name": "Nome"
+  },
+
+  "currency": {
+    "apply": "Aplicar alterações de moeda",
+    "modified": "Moeda atualizada",
+    "label": "{name}:"
+  },
+
+  "character": {
+    "role_id": "ID do personagem",
+    "level": "Nível",
+    "exp": "EXP",
+    "ascend": "Ascensão",
+    "transcend": "Transcendência",
+    "hp": "HP",
+    "soldier_grade": "Grau de soldado",
+    "apply": "Aplicar alterações de personagem",
+    "modified": "Dados do personagem atualizados",
+    "no_character": "Sem dados de personagem"
+  },
+
+  "dialogs": {
+    "confirm": "Confirmar",
+    "ok": "OK",
+    "cancel": "Cancelar",
+    "yes": "Sim",
+    "no": "Não",
+    "backup_confirm": "Fazer backup do save atual?",
+    "restore_confirm": "O save será sobrescrito com o backup. Continuar?\n(O arquivo atual será substituído; verifique se há backup)",
+    "save_confirm": "As alterações serão gravadas criptografadas no save. Continuar?",
+    "open_title": "Selecionar arquivo de save",
+    "file_filter": "Arquivos de save (*.db);;Todos os arquivos (*.*)",
+    "unsupported_file": "Não é um arquivo de save válido",
+    "no_backup": "Nenhum backup encontrado (.db.backup)",
+    "restore_need_reload": "Restauração concluída. Reabra o save para ver os dados"
+  },
+
+  "settings": {
+    "title": "Configurações",
+    "language": "Idioma",
+    "language_desc": "Reinício necessário após mudar o idioma",
+    "theme": "Tema",
+    "theme_dark": "Escuro",
+    "theme_light": "Claro",
+    "save": "Salvar configurações",
+    "saved": "Configurações salvas"
+  }
+}
