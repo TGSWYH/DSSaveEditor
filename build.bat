@@ -14,6 +14,7 @@ if exist dist\DSSaveEditor.exe del /q dist\DSSaveEditor.exe
 echo [2/3] PyInstaller 打包 (onefile, windowed)...
 python -m PyInstaller --noconfirm --clean --onefile --windowed ^
   --name "DSSaveEditor" ^
+  --icon "app.ico" ^
   --add-data "data;data" ^
   --add-data "app/locales;app/locales" ^
   run_editor.py
