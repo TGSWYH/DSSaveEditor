@@ -1,0 +1,41 @@
+name: Build & Release
+
+on:
+  push:
+    tags:
+      - 'v*'          # 推送 v1.0 / v1.0.1 等 tag 时触发
+
+permissions:
+  contents: write     # 允许上传 Release 附件
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 安装依赖
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pyinstaller
+
+      - name: PyInstaller 构建单文件 exe
+        run: |
+          python -m PyInstaller --noconfirm --clean --onefile --windowed `
+            --name "DSSaveEditor" `
+            --icon "app.ico" `
+            --add-data "data;data" `
+            --add-data "app/locales;app/locales" `
+            run_editor.py
+
+      - name: 上传 exe 到 Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/DSSaveEditor.exe
+          generate_release_notes: true   # 自动生成提交历史说明
