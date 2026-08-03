@@ -1,6 +1,12 @@
 {
   "app_title": "DragonSword: Awakening Save Editor",
   "app_subtitle": "DragonSword: Awakening Save Editor",
+  "disclaimer": {
+    "title": "DragonSword: Awakening Save Editor",
+    "disclaimer": "This software is intended solely for learning, research, and exchange regarding save file formats and game mechanics. It is not affiliated with the game's official team.\nDo not use it for commercial purposes or any illegal activities. Any consequences arising from its use are the sole responsibility of the user.",
+    "free": "This software is permanently free.\nIf you obtained it through a paid channel, demand a full refund from the seller immediately and report them to the author.",
+    "understand": "I Understand and Agree"
+  },
   "menu": {
     "open": "Open Save",
     "backup": "Backup",
