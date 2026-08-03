@@ -74,7 +74,8 @@
     "file_filter": "Save files (*.db);;All files (*.*)",
     "unsupported_file": "Not a valid save file",
     "no_backup": "No backup file found (.db.backup)",
-    "restore_need_reload": "Restore complete. Reopen the save to view the data"
+    "restore_need_reload": "Restore complete. Reopen the save to view the data",
+    "discard_changes": "The current save has unsaved changes that will be lost. Continue?"
   },
   "settings": {
     "title": "Settings",
@@ -109,7 +110,20 @@
     "nav_grade": "Promotion Trials",
     "nav_other": "Other",
     "nav_karma": "Karma Seals",
-    "nav_unreleased": "Unreleased Quests"
+    "nav_unreleased": "Unreleased Quests",
+    "nav_vehicle": "Familiars"
+  },
+  "vehicle_page": {
+    "title": "Familiars",
+    "type_fmt": "Type: {type}",
+    "available": "Available",
+    "unavailable": "Locked",
+    "dlc_badge": "[DLC]",
+    "hint": "Unlock to use this familiar in game",
+    "unlocked": "Unlocked: {name}",
+    "locked": "Locked: {name}",
+    "search": "Search familiar name/type/ID",
+    "no_data": "Familiar data missing (vehicle_data.json)"
   },
   "karma_page": {
     "title": "Karma Seals",
@@ -132,6 +146,8 @@
     "no_db": "Open a save file first",
     "no_selection": "Select a seal",
     "no_data": "No karma seal data",
+    "dbid_fmt": "ITEM_DBID = {dbid}   ·   ITEM_CID = {cid}",
+    "level_range": "LEVEL {lv} out of range (1-100)",
     "collection_unlocked": "Collection unlocked"
   },
   "quest_page": {
@@ -183,7 +199,8 @@
     "card_updated": "Record card tier updated",
     "card_sync": "Sync Tiers",
     "card_synced": "Record card tiers synced to quest progress",
-    "card_sync_hint": "Tier = completed quests in this line (auto-syncs after quest edits)"
+    "card_sync_hint": "Tier = completed quests in this line (auto-syncs after quest edits)",
+    "card_fallback": "Card {id}"
   },
   "region_page": {
     "title": "Region Quests",
@@ -205,7 +222,10 @@
     "cnt_updated": "Clear count updated",
     "applied": "Batch updated {n} region quests",
     "select_first": "Select quests first",
-    "hold_removed": "Removed {n} in-progress records"
+    "hold_removed": "Removed {n} in-progress records",
+    "select_all": "Select All",
+    "select_none": "Select None",
+    "select_invert": "Invert Selection"
   },
   "equipment_page": {
     "search": "Search equipment",
@@ -250,7 +270,9 @@
     "gem_engraved": "Engraved Gem",
     "gem_updated": "Gem socket updated",
     "gem_need_tool": "The Craftsman's Fine Tool is required to unlock the gem socket",
-    "gem_effect": "Effect"
+    "gem_effect": "Effect",
+    "dbid_fmt": "ITEM_DBID: {dbid}  ·  ITEM_CID: {cid}",
+    "series_fmt": "Series {series}"
   },
   "inventory_page": {
     "search": "Search items",
@@ -322,11 +344,20 @@
     "no_save": "No save loaded",
     "open_hint": "Click \"Open Save\" above to start"
   },
+  "overview_page": {
+    "gold": "Gold"
+  },
   "character_page": {
     "apply": "Apply",
     "modified": "Updated",
     "advanced": "Advanced",
     "no_data": "No character data",
+    "list_lv_fmt": "{name}  (Lv.{lv})",
+    "cid_fmt": "CHARACTER_CID = {cid}",
+    "lv_fmt": "Lv.{lv}",
+    "skill_fallback": "Skill {tv}",
+    "tv_fmt": "(TV={tv} -> {lv})",
+    "tv_master_fmt": "(TV={tv} {state})",
     "master_lit": "Lit",
     "master_off": "Not lit",
     "skill_fixed": "This skill's level is fixed",
@@ -338,7 +369,19 @@
     "skill_none": "No skill data for this character",
     "max_all": "⚡ Max All",
     "max_all_confirm": "Set level to 70 and unlock all skills? Continue?",
-    "max_all_done": "Maxed out: level 70, all skills unlocked"
+    "max_all_done": "Maxed out: level 70, all skills unlocked",
+    "join": "+ Join",
+    "leave": "- Leave",
+    "join_title": "Select a character to join",
+    "join_search": "Search character name/ID",
+    "hidden_badge": "[Unreleased]",
+    "hidden_warn": "This character is not yet implemented (hidden). Adding them may cause issues in game. Continue?",
+    "no_collection_badge": "[No Collection]",
+    "no_collection_warn": "This character is not in the collection (possibly unreleased); the collection will not unlock. Add anyway?",
+    "select_first": "Select a character first",
+    "joined": "Joined: {name}",
+    "leave_confirm": "Remove {name} from the team?",
+    "left": "Removed from team: {name}"
   },
   "currency_page": {
     "apply_all": "Apply All",

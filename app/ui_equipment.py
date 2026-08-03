@@ -17,6 +17,7 @@ from PySide6.QtWidgets import (
 )
 
 from . import i18n
+from .config import DATA_DIR
 from .datasource import localize_name, USER_DBID
 from .ui_common import make_card
 
@@ -62,7 +63,7 @@ class EquipmentPage(QWidget):
         """
         try:
             path = os.path.join(
-                os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                DATA_DIR,
                 "equipment_exp.json",
             )
             if not os.path.exists(path):
@@ -112,7 +113,7 @@ class EquipmentPage(QWidget):
         """
         try:
             path = os.path.join(
-                os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                DATA_DIR,
                 "stat_names.json",
             )
             if not os.path.exists(path):
@@ -128,7 +129,7 @@ class EquipmentPage(QWidget):
         """加载 equip_items.json (装备基底: {item: {cid: {series, grade, category}}}); 失败返回 {}。"""
         try:
             path = os.path.join(
-                os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                DATA_DIR,
                 "equip_items.json",
             )
             if not os.path.exists(path):
@@ -145,7 +146,7 @@ class EquipmentPage(QWidget):
         结构: {id: {s1, v1, s2, v2}}; 失败返回 {} (符文列表属性列显示 "-")。"""
         try:
             path = os.path.join(
-                os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                DATA_DIR,
                 "gem_stat.json",
             )
             if not os.path.exists(path):
@@ -347,7 +348,7 @@ class EquipmentPage(QWidget):
         name_lbl = QLabel(name)
         name_lbl.setStyleSheet("font-size: 16pt; font-weight: 700; color: #7aa2f7;")
         self.detail_lay.addWidget(name_lbl)
-        sub = QLabel(f"ITEM_DBID: {dbid}  ·  ITEM_CID: {cid}")
+        sub = QLabel(str(i18n.tr("equipment_page.dbid_fmt", dbid=dbid, cid=cid)))
         sub.setStyleSheet("color: #7f849c; font-size: 9pt;")
         self.detail_lay.addWidget(sub)
 
@@ -867,7 +868,8 @@ class AddEquipmentDialog(QDialog):
 
         self.series_combo = QComboBox()
         for s in ["2", "3", "4", "5"]:
-            self.series_combo.addItem(f"系列 {s}", s)
+            self.series_combo.addItem(str(i18n.tr("equipment_page.series_fmt",
+                                                  series=s)), s)
         self.series_combo.currentIndexChanged.connect(self._on_series_part_changed)
         form.addRow(str(i18n.tr("equipment_page.series")), self.series_combo)
 

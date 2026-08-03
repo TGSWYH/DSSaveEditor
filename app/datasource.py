@@ -13,7 +13,7 @@ import sqlite3
 
 import ds_save
 
-from .config import TOOL_ROOT
+from .config import TOOL_ROOT, DATA_DIR
 from . import i18n
 
 USER_DBID = 1000  # 当前玩家主键
@@ -147,7 +147,7 @@ class SaveData:
     def save_to_db(self):
         """把内存库写回原始 .db (先自动备份)"""
         if not self.db_path:
-            raise ds_save.DSError("没有打开存档")
+            raise ds_save.DSError("No save file opened")
         bak = ds_save.backup(self.db_path)
         plain = self._export_plain()
         ds_save.save_encrypted(plain, self.db_path, self.db_path)
@@ -208,7 +208,7 @@ class SaveData:
 
     def _export_plain(self):
         if not self._tmpfile:
-            raise ds_save.DSError("内部错误: 未挂载临时数据库")
+            raise ds_save.DSError("Internal error: temp database not mounted")
         self.conn.commit()
         with open(self._tmpfile, "rb") as f:
             return f.read()
@@ -233,7 +233,7 @@ class NameResolver:
 
     def __init__(self):
         self.names = {}
-        path = os.path.join(TOOL_ROOT, "id_names.json")
+        path = os.path.join(DATA_DIR, "id_names.json")
         if not os.path.exists(path):
             return
         try:
@@ -353,7 +353,7 @@ class QuestManager:
         self._load_meta()
 
     def _load_meta(self):
-        path = os.path.join(TOOL_ROOT, "quest_data.json")
+        path = os.path.join(DATA_DIR, "quest_data.json")
         if not os.path.exists(path):
             return
         try:
@@ -441,7 +441,7 @@ class QuestManager:
                     continue
                 name = (localize_name(c.get("subtitle"))
                         or localize_name(c.get("title"))
-                        or f"卡 {c.get('card_id')}")
+                        or i18n.tr("quest_page.card_fallback", id=c.get("card_id")))
                 lines.append((str(c.get("card_id")), name, ids))
             return lines
         if page == "epic":
@@ -467,7 +467,7 @@ class QuestManager:
         return localize_name(self._char_names.get(str(char_id))) if char_id is not None else None
 
     def _load_char_names(self):
-        path = os.path.join(TOOL_ROOT, "id_names.json")
+        path = os.path.join(DATA_DIR, "id_names.json")
         if os.path.exists(path):
             try:
                 with open(path, "r", encoding="utf-8") as f:

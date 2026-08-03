@@ -39,22 +39,41 @@ python run_editor.py
 DSSaveEditor/
 ├── run_editor.py          # 启动入口
 ├── ds_save.py             # 加密核心（SQLCipher 解密/加密/HMAC）
-├── app/
+├── build.bat              # 打包脚本（PyInstaller onefile → dist\DSSaveEditor.exe）
+├── requirements.txt       # 运行依赖（PySide6 / pycryptodome）
+├── app/                   # 应用代码
 │   ├── main.py            # 应用入口逻辑
 │   ├── i18n.py            # 本地化框架（JSON 语言包 + en 兜底）
 │   ├── config.py          # 用户配置（config.json：语言/主题/上次路径）
-│   ├── datasource.py      # 存档数据操作（SaveData / NameResolver / localize_name）
-│   ├── ui_main.py         # 主窗口与全部页面（UI 层）
+│   ├── datasource.py      # 存档数据操作（SaveData / NameResolver / QuestManager）
+│   ├── ui_main.py         # 主窗口与导航
+│   ├── ui_common.py       # 通用 UI 辅助（卡片/清空布局）
+│   ├── ui_overview.py     # 总览页
+│   ├── ui_character.py    # 角色养成页（含入队/出队/一键满级）
+│   ├── ui_karma.py        # 宿命烙印页
+│   ├── ui_vehicle.py      # 使魔页
+│   ├── ui_equipment.py    # 装备页（强化/词条/符文槽）
+│   ├── ui_inventory.py    # 背包页（新增道具/批量）
+│   ├── ui_quest.py        # 任务页（主线/因缘/英雄记录/区域/晋升/其他/未开放）
+│   ├── ui_backup.py       # 备份管理 + 修改对比对话框
+│   ├── ui_tools.py        # 数据工具页
 │   ├── ui_settings.py     # 设置对话框
 │   ├── ui_theme.py        # 深色/浅色 QSS 主题
 │   └── locales/           # 11 种语言文件（zh_CN/zh_TW/en/ja/ko_KR/de/fr/es_ES/pt_BR/ru/th）
-├── id_names.json          # 物品/角色/怪物/NPC/坐骑 → 11 语言名
-├── stat_names.json        # 属性/主词条/副词条 → 11 语言名
-├── equip_items.json       # 装备基底（系列/部位/品质）
-├── skill_names.json       # 角色技能槽 → 名称/等级上限
-├── level_exp.json         # 等级 → 合法经验值
-├── requirements.txt
-└── 存档文件解析.md          # 存档格式与破解全过程文档
+├── data/                  # 游戏数据映射（由 FModel 导出表生成）
+│   ├── id_names.json      # 物品/角色/怪物/NPC/使魔 → 11 语言名
+│   ├── stat_names.json    # 属性/主词条/副词条 → 11 语言名
+│   ├── equip_items.json   # 装备基底（系列/部位/品质）
+│   ├── equipment_exp.json # 强化等级经验规则（按品质）
+│   ├── skill_names.json   # 角色技能槽 → 名称/等级上限
+│   ├── level_exp.json     # 等级 → 合法经验值
+│   ├── quest_data.json    # 任务元数据（325 任务 + 记录卡 + 动态任务）
+│   ├── character_data.json # 可入队角色元数据（图鉴范围/隐藏标志）
+│   ├── vehicle_data.json  # 使魔元数据（名称/类型/介绍/DLC）
+│   ├── gem_stat.json      # 符文属性定义
+│   └── item_types.json    # 背包可新增物品类型清单
+└── docs/
+    └── 存档文件解析.md      # 存档格式与破解全过程文档
 ```
 
 ## 维护指南
@@ -67,7 +86,7 @@ DSSaveEditor/
 | 数据 | `app/datasource.py` | SQLite 操作封装、名称解析 | 表操作统一走 `SaveData`；新增名称映射列走 `NameResolver` |
 | UI | `app/ui_main.py` | 全部界面 | 新增页面：建页面类 + 在 `MainWindow` 注册（pages/nav_items/stack/refresh_all_pages） |
 | 本地化 | `app/i18n.py` + `locales/*.json` | 文案 | 所有可见文案必须走 `i18n.tr("key")`；新 key 加入 zh_CN/en，其余语言自动 en 兜底 |
-| 数据文件 | 根目录 `*.json` | 名称/规则映射 | 由游戏解包表生成，见下 |
+| 数据文件 | `data/*.json` | 名称/规则映射 | 由游戏解包表生成，见下 |
 
 ### 新增界面文案
 
@@ -86,11 +105,16 @@ DSSaveEditor/
 
 | 数据文件 | 源表（`Content/Design/GameData/`） |
 |---|---|
-| `id_names.json` | GameItemData / PCCharacterData / MonsterCharacterData / NPCCharacterData / VehicleCharacterData / StringData |
-| `stat_names.json` | StatListData / EquipmentMainStatData / EquipmentSubStatData / StringData |
-| `skill_names.json` | PCSkillGrowthData / StringData |
-| `level_exp.json` | PCCharacterLevelData |
-| `equip_items.json` | GameItemData（ItemType=EQUIPMENT） |
+| `data/id_names.json` | GameItemData / PCCharacterData / MonsterCharacterData / NPCCharacterData / VehicleCharacterData / StringData |
+| `data/stat_names.json` | StatListData / EquipmentMainStatData / EquipmentSubStatData / StringData |
+| `data/skill_names.json` | PCSkillGrowthData / StringData |
+| `data/level_exp.json` | PCCharacterLevelData |
+| `data/equip_items.json` | GameItemData（ItemType=EQUIPMENT） |
+| `data/quest_data.json` | QuestMainData / QuestStepData / QuestRecordData / DynamicQuest* / StringQuestData |
+| `data/character_data.json` | PCCharacterData / CharCollectionData |
+| `data/vehicle_data.json` | VehicleCharacterData / GameItemData / StringData |
+| `data/gem_stat.json` | GemStatData |
+| `data/item_types.json` | GameItemData（ItemType 清单） |
 
 生成逻辑：表内 `Name` 字段 → StringData ID → 取 11 语言字段（SourceString=韩文, En, Ja, Zh_CN, Zh_TW, De, Fr, Es_ES, Pt_BR, Ru, Th）。**注意词条属性名需大小写无关匹配**（词条里 `MaxHP` vs 表里 `MAXHP`）。
 

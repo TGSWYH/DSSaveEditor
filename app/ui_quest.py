@@ -160,8 +160,11 @@ class QuestPage(QWidget):
         self.table.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
         self.table.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
         self.table.setAlternatingRowColors(True)
+        self.table.setShowGrid(False)
         self.table.verticalHeader().setVisible(False)
-        self.table.horizontalHeader().setStretchLastSection(False)
+        self.table.verticalHeader().setDefaultSectionSize(30)
+        # 铺满策略: 首列勾选列固定 36px, 其余列按内容自适应, 最后一列拉伸填满
+        self.table.horizontalHeader().setStretchLastSection(True)
         self.table.horizontalHeader().setSectionResizeMode(
             QHeaderView.ResizeMode.Interactive
         )
@@ -685,8 +688,15 @@ class QuestPage(QWidget):
             # 进度
             prog_txt = str(det.get("cnt", 0)) if st == "hold" else "-"
             self.table.setItem(i, 6, QTableWidgetItem(prog_txt))
+        # 铺满: 首列勾选固定 36px, 中间列按内容自适应, 末列拉伸填满
+        header = self.table.horizontalHeader()
+        header.setStretchLastSection(True)
         self.table.setColumnWidth(0, 36)
-        self.table.resizeColumnsToContents()
+        header.setSectionResizeMode(0, QHeaderView.ResizeMode.Fixed)
+        for c in range(1, self.table.columnCount() - 1):
+            header.setSectionResizeMode(c, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(self.table.columnCount() - 1,
+                                    QHeaderView.ResizeMode.Stretch)
 
     def _on_table_dbl(self, row, _col):
         if row < 0 or row >= self.table.rowCount():
@@ -874,8 +884,11 @@ class RegionQuestPage(QWidget):
         self.table.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
         self.table.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
         self.table.setAlternatingRowColors(True)
+        self.table.setShowGrid(False)
         self.table.verticalHeader().setVisible(False)
-        self.table.horizontalHeader().setStretchLastSection(False)
+        self.table.verticalHeader().setDefaultSectionSize(30)
+        # 铺满策略: 首列勾选固定 36px, 其余列按内容自适应, 末列拉伸
+        self.table.horizontalHeader().setStretchLastSection(True)
         self.table.horizontalHeader().setSectionResizeMode(
             QHeaderView.ResizeMode.Interactive
         )
@@ -896,6 +909,19 @@ class RegionQuestPage(QWidget):
         self.clear_hold_btn.clicked.connect(self._batch_clear_hold)
         btn_row.addWidget(self.clear_hold_btn)
         btn_row.addStretch(1)
+        # 选择按钮: 全选 / 全不选 / 反选 (紧凑排列)
+        self.select_all_btn = QPushButton(str(i18n.tr("region_page.select_all")))
+        self.select_all_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.select_all_btn.clicked.connect(self._select_all)
+        btn_row.addWidget(self.select_all_btn)
+        self.select_none_btn = QPushButton(str(i18n.tr("region_page.select_none")))
+        self.select_none_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.select_none_btn.clicked.connect(self._select_none)
+        btn_row.addWidget(self.select_none_btn)
+        self.select_invert_btn = QPushButton(str(i18n.tr("region_page.select_invert")))
+        self.select_invert_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.select_invert_btn.clicked.connect(self._select_invert)
+        btn_row.addWidget(self.select_invert_btn)
         outer.addLayout(btn_row)
 
     # ---------- 数据加载 ----------
@@ -998,13 +1024,23 @@ class RegionQuestPage(QWidget):
             spin.editingFinished.connect(
                 lambda q=qid, s=spin: self._on_cnt_changed(q, s))
             self.table.setCellWidget(i, 6, spin)
+        # 铺满: 首列勾选固定 36px, 中间列按内容自适应, 末列拉伸填满
+        header = self.table.horizontalHeader()
+        header.setStretchLastSection(True)
         self.table.setColumnWidth(0, 36)
-        self.table.resizeColumnsToContents()
+        header.setSectionResizeMode(0, QHeaderView.ResizeMode.Fixed)
+        for c in range(1, self.table.columnCount() - 1):
+            header.setSectionResizeMode(c, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(self.table.columnCount() - 1,
+                                    QHeaderView.ResizeMode.Stretch)
 
     def _set_btns(self, on):
         self.done_inc_btn.setEnabled(on)
         self.done_dec_btn.setEnabled(on)
         self.clear_hold_btn.setEnabled(on)
+        self.select_all_btn.setEnabled(on)
+        self.select_none_btn.setEnabled(on)
+        self.select_invert_btn.setEnabled(on)
 
     # ---------- 完成次数编辑 ----------
     def _on_cnt_changed(self, qid, spin):
@@ -1030,6 +1066,29 @@ class RegionQuestPage(QWidget):
                 if id_it and id_it.data(Qt.ItemDataRole.UserRole):
                     out.append(id_it.data(Qt.ItemDataRole.UserRole))
         return out
+
+    def _select_all(self):
+        """全选: 勾选全部行。"""
+        for i in range(self.table.rowCount()):
+            it = self.table.item(i, 0)
+            if it is not None:
+                it.setCheckState(Qt.CheckState.Checked)
+
+    def _select_none(self):
+        """全不选: 取消全部勾选。"""
+        for i in range(self.table.rowCount()):
+            it = self.table.item(i, 0)
+            if it is not None:
+                it.setCheckState(Qt.CheckState.Unchecked)
+
+    def _select_invert(self):
+        """反选: 反转所有行勾选状态。"""
+        for i in range(self.table.rowCount()):
+            it = self.table.item(i, 0)
+            if it is not None:
+                it.setCheckState(Qt.CheckState.Unchecked
+                                 if it.checkState() == Qt.CheckState.Checked
+                                 else Qt.CheckState.Checked)
 
     def _batch_inc(self):
         qids = self._checked_qids()

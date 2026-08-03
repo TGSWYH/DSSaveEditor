@@ -17,6 +17,7 @@ from PySide6.QtWidgets import (
 )
 
 from . import i18n
+from .config import DATA_DIR
 from .datasource import USER_DBID, QuestManager
 from .ui_common import make_card
 
@@ -48,7 +49,7 @@ class KarmaPage(QWidget):
         """加载 level_exp.json: {等级: 该等级应匹配的经验值}; 失败返回 {}。"""
         try:
             path = os.path.join(
-                os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                DATA_DIR,
                 "level_exp.json",
             )
             if not os.path.exists(path):
@@ -64,7 +65,7 @@ class KarmaPage(QWidget):
         """加载 item_types.json 的 karma 数组 (宿命烙印物品 CID); 失败返回 []。"""
         try:
             path = os.path.join(
-                os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                DATA_DIR,
                 "item_types.json",
             )
             if not os.path.exists(path):
@@ -218,7 +219,7 @@ class KarmaPage(QWidget):
         name_lbl = QLabel(name)
         name_lbl.setStyleSheet("font-size: 16pt; font-weight: 700; color: #7aa2f7;")
         self.detail_lay.addWidget(name_lbl)
-        sub = QLabel(f"ITEM_DBID = {dbid}   ·   ITEM_CID = {cid}")
+        sub = QLabel(str(i18n.tr("karma_page.dbid_fmt", dbid=dbid, cid=cid)))
         sub.setStyleSheet("color: #7f849c; font-size: 9pt;")
         self.detail_lay.addWidget(sub)
 
@@ -281,7 +282,7 @@ class KarmaPage(QWidget):
                 return
             if lv < 1 or lv > 100:
                 QMessageBox.warning(self, str(i18n.tr("status.error")),
-                                    f"LEVEL {lv} 超出范围 (1~100)")
+                                    str(i18n.tr("karma_page.level_range", lv=lv)))
                 return
             exp = int(self.level_exp.get(str(lv), 0)) if self.level_exp else 0
             ascend = max(0, min(5, (lv - 1) // 10 - 1))

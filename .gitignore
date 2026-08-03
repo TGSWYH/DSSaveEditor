@@ -14,3 +14,8 @@ config.json
 # 开发辅助
 .opencode/
 *.db.decrypted
+
+# PyInstaller 构建产物
+build/
+dist/
+*.spec

@@ -1,20 +1,23 @@
 # -*- coding: utf-8 -*-
-"""角色养成页 (CharacterPage): 左角色列表 + 右编辑面板 + 高级原始表格。
+"""角色养成页 (CharacterPage + AddCharacterDialog): 左角色列表 + 右编辑面板 + 高级原始表格。
 
-从 ui_main 拆出。
+从 ui_main 拆出。支持入队 (AddCharacterDialog) / 出队 (删除 tb_character 行)。
 """
 
 import os
 import json
+import time
 
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QSplitter, QListWidget,
     QListWidgetItem, QScrollArea, QFrame, QCheckBox, QLabel, QLineEdit,
-    QFormLayout, QPushButton, QSpinBox, QMessageBox,
+    QFormLayout, QPushButton, QSpinBox, QMessageBox, QDialog,
+    QDialogButtonBox,
 )
 
 from . import i18n
+from .config import DATA_DIR
 from .datasource import USER_DBID, localize_name
 from .ui_common import make_card
 from .ui_tools import TablePanel
@@ -36,8 +39,27 @@ class CharacterPage(QWidget):
         self.skill_names = self._load_skill_names()
         # 加载等级->经验映射 (level_exp.json, 改等级时自动匹配经验)
         self.level_exp = self._load_level_exp()
+        # 加载角色元数据 (character_data.json: 37 个可入队角色, 含 hidden/default_hp)
+        self.character_data = self._load_character_data()
         self._skill_spins = {}  # type_value -> QSpinBox
         self._build()
+
+    @staticmethod
+    def _load_character_data():
+        """加载 character_data.json; 失败返回 {}。
+        结构: {char_cid_str: {name, hidden, default_hp}}"""
+        try:
+            path = os.path.join(
+                DATA_DIR,
+                "character_data.json",
+            )
+            if not os.path.exists(path):
+                return {}
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            return data if isinstance(data, dict) else {}
+        except Exception:
+            return {}
 
     @staticmethod
     def _load_skill_names():
@@ -46,7 +68,7 @@ class CharacterPage(QWidget):
         """
         try:
             path = os.path.join(
-                os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                DATA_DIR,
                 "skill_names.json",
             )
             if not os.path.exists(path):
@@ -62,7 +84,7 @@ class CharacterPage(QWidget):
         """加载 level_exp.json: {等级: 该等级应匹配的经验值}; 失败返回 {}。"""
         try:
             path = os.path.join(
-                os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                DATA_DIR,
                 "level_exp.json",
             )
             if not os.path.exists(path):
@@ -88,6 +110,18 @@ class CharacterPage(QWidget):
         self.char_list = QListWidget()
         self.char_list.currentRowChanged.connect(self._on_select)
         left_lay.addWidget(self.char_list)
+
+        # 入队 / 出队按钮行
+        join_row = QHBoxLayout()
+        self.join_btn = QPushButton(str(i18n.tr("character_page.join")))
+        self.join_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.join_btn.clicked.connect(self._open_join_dialog)
+        join_row.addWidget(self.join_btn)
+        self.leave_btn = QPushButton(str(i18n.tr("character_page.leave")))
+        self.leave_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.leave_btn.clicked.connect(self._leave_selected)
+        join_row.addWidget(self.leave_btn)
+        left_lay.addLayout(join_row)
         splitter.addWidget(left)
 
         # 右: 编辑面板 (滚动)
@@ -129,6 +163,9 @@ class CharacterPage(QWidget):
 
     def reload(self):
         self.char_list.clear()
+        has_db = self.data.db_path is not None
+        self.join_btn.setEnabled(has_db)
+        self.leave_btn.setEnabled(has_db)
         try:
             rows = self.data.select_all("tb_character", "USER_DBID=?", (USER_DBID,))
         except Exception:
@@ -146,7 +183,8 @@ class CharacterPage(QWidget):
             cid = r["CHARACTER_CID"]
             cname = self.names.resolve("CHARACTER_CID", cid)
             disp = cname if cname else f"#{cid}"
-            item = QListWidgetItem(f"{disp}  (Lv.{r['LEVEL']})")
+            item = QListWidgetItem(str(i18n.tr("character_page.list_lv_fmt",
+                                                name=disp, lv=r["LEVEL"])))
             item.setData(Qt.ItemDataRole.UserRole, cid)
             self.char_list.addItem(item)
         # 默认选第一个
@@ -158,6 +196,43 @@ class CharacterPage(QWidget):
         r = self._rows[row_idx]
         self._current_cid = r["CHARACTER_CID"]
         self._render_edit(r)
+
+    # ---------- 入队 / 出队 ----------
+    def _open_join_dialog(self):
+        if not self.data.db_path:
+            QMessageBox.information(self, "", str(i18n.tr("status.no_db")))
+            return
+        dlg = AddCharacterDialog(self.data, self.names, self)
+        if dlg.exec() == QDialog.DialogCode.Accepted:
+            self.reload()
+            self.main_window.set_status(str(i18n.tr("character_page.joined",
+                                                    name=dlg.char_name)))
+
+    def _leave_selected(self):
+        """出队: 删除选中角色行 (需确认)。"""
+        if not self.data.db_path:
+            return
+        if self._current_cid is None:
+            QMessageBox.information(self, str(i18n.tr("dialogs.confirm")),
+                                    str(i18n.tr("character_page.select_first")))
+            return
+        cid = self._current_cid
+        cname = self.names.resolve("CHARACTER_CID", cid) or f"#{cid}"
+        if QMessageBox.question(
+                self, str(i18n.tr("dialogs.confirm")),
+                str(i18n.tr("character_page.leave_confirm", name=cname))
+        ) != QMessageBox.StandardButton.Yes:
+            return
+        try:
+            self.data.execute(
+                "DELETE FROM tb_character WHERE USER_DBID=? AND CHARACTER_CID=?",
+                (USER_DBID, cid))
+        except Exception as ex:
+            QMessageBox.critical(self, str(i18n.tr("status.error")), str(ex))
+            return
+        self._current_cid = None
+        self.main_window.set_status(str(i18n.tr("character_page.left", name=cname)))
+        self.reload()
 
     def select_character(self, cid):
         """供 MainWindow 调用: 选中指定 cid 的角色。"""
@@ -176,7 +251,7 @@ class CharacterPage(QWidget):
         name_lbl.setStyleSheet("font-size: 16pt; font-weight: 700; color: #7aa2f7;")
         self.edit_lay.addWidget(name_lbl)
 
-        sub = QLabel(f"CHARACTER_CID = {cid}")
+        sub = QLabel(str(i18n.tr("character_page.cid_fmt", cid=cid)))
         sub.setStyleSheet("color: #7f849c; font-size: 9pt;")
         self.edit_lay.addWidget(sub)
 
@@ -279,7 +354,8 @@ class CharacterPage(QWidget):
         else:
             for tv in sorted_tvs:
                 info = meta.get(str(tv), {})
-                name = localize_name(info.get("name")) or f"技能 {tv}"
+                name = localize_name(info.get("name")) or str(i18n.tr(
+                    "character_page.skill_fallback", tv=tv))
                 max_level = info.get("max_level", 10) or 10
                 is_master = info.get("skill_type", "") == "MASTER"
                 disp_name = ("★ " + name) if is_master else name
@@ -300,7 +376,8 @@ class CharacterPage(QWidget):
                     row.addWidget(chk)
                     self._skill_checks[tv] = chk
                 else:
-                    cur_lbl = QLabel(f"Lv.{cur_lv}")
+                    cur_lbl = QLabel(str(i18n.tr("character_page.lv_fmt",
+                                                  lv=cur_lv)))
                     cur_lbl.setStyleSheet("color: #7f849c;")
                     cur_lbl.setMinimumWidth(50)
                     row.addWidget(cur_lbl)
@@ -362,9 +439,12 @@ class CharacterPage(QWidget):
                 return
             self.main_window.set_status(
                 str(i18n.tr("character_page.skill_updated"))
-                + f" (TV={type_value} "
-                + (str(i18n.tr("character_page.master_lit")) if chk.isChecked() else str(i18n.tr("character_page.master_off")))
-                + ")"
+                + " "
+                + str(i18n.tr("character_page.tv_master_fmt",
+                              tv=type_value,
+                              state=str(i18n.tr("character_page.master_lit"))
+                              if chk.isChecked()
+                              else str(i18n.tr("character_page.master_off"))))
             )
             return
         spin = self._skill_spins.get(type_value)
@@ -389,7 +469,9 @@ class CharacterPage(QWidget):
             QMessageBox.critical(self, str(i18n.tr("status.error")), str(ex))
             return
         self.main_window.set_status(
-            str(i18n.tr("character_page.skill_updated")) + f" (TV={type_value} -> {lv})"
+            str(i18n.tr("character_page.skill_updated"))
+            + " "
+            + str(i18n.tr("character_page.tv_fmt", tv=type_value, lv=lv))
         )
 
     def _apply_all_skills(self):
@@ -546,3 +628,147 @@ class CharacterPage(QWidget):
                 w.deleteLater()
             else:
                 self._clear_layout(item.layout())
+
+
+# ============================================================
+# 新增角色对话框 (入队)
+# ============================================================
+class AddCharacterDialog(QDialog):
+    """入队: 从 character_data.json 的可入队角色中选择 (排除已在队), 默认 1 级写入。"""
+
+    def __init__(self, data, names, parent):
+        super().__init__(parent)
+        self.data = data
+        self.names = names
+        self.char_name = ""
+        # 复用父页 CharacterPage 的元数据
+        self.character_data = getattr(parent, "character_data", None) or {}
+        self.level_exp = getattr(parent, "level_exp", None) or {}
+        self._in_team = set()   # 已在队 CHARACTER_CID 集合
+        self._load_in_team()
+        self.setWindowTitle(str(i18n.tr("character_page.join_title")))
+        self.setMinimumSize(420, 460)
+        self._build()
+        self._refresh_list()
+
+    def _load_in_team(self):
+        try:
+            rows = self.data.select_all("tb_character", "USER_DBID=?", (USER_DBID,))
+            self._in_team = {r["CHARACTER_CID"] for r in rows}
+        except Exception:
+            self._in_team = set()
+
+    def _char_name(self, cid):
+        """角色名: 优先 character_data.json name -> names.resolve -> #CID。"""
+        meta = self.character_data.get(str(cid))
+        if isinstance(meta, dict):
+            n = localize_name(meta.get("name"))
+            if n:
+                return str(n)
+        resolved = self.names.resolve("CHARACTER_CID", cid)
+        if resolved:
+            return str(resolved)
+        return f"#{cid}"
+
+    def _is_hidden(self, cid):
+        meta = self.character_data.get(str(cid))
+        return bool(isinstance(meta, dict) and meta.get("hidden"))
+
+    def _in_collection(self, cid):
+        """角色是否在图鉴范围内 (character_data.json in_collection)。
+        缺失视为 False (保守: 宁提示不错过)。"""
+        meta = self.character_data.get(str(cid))
+        if isinstance(meta, dict):
+            return bool(meta.get("in_collection"))
+        return False
+
+    # ---------- 布局 ----------
+    def _build(self):
+        lay = QVBoxLayout(self)
+        lay.setContentsMargins(14, 14, 14, 14)
+        lay.setSpacing(8)
+
+        self.search_box = QLineEdit()
+        self.search_box.setPlaceholderText(str(i18n.tr("character_page.join_search")))
+        self.search_box.textChanged.connect(lambda _t: self._refresh_list())
+        lay.addWidget(self.search_box)
+
+        self.item_list = QListWidget()
+        self.item_list.setSelectionMode(QListWidget.SelectionMode.SingleSelection)
+        lay.addWidget(self.item_list, 1)
+
+        btns = QDialogButtonBox(
+            QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
+        btns.button(QDialogButtonBox.StandardButton.Ok).setText(str(i18n.tr("dialogs.ok")))
+        btns.button(QDialogButtonBox.StandardButton.Cancel).setText(str(i18n.tr("dialogs.cancel")))
+        btns.accepted.connect(self._on_ok)
+        btns.rejected.connect(self.reject)
+        lay.addWidget(btns)
+
+    # ---------- 列表 ----------
+    def _refresh_list(self):
+        self.item_list.clear()
+        kw = self.search_box.text().strip().lower()
+        for cid in sorted(self.character_data, key=lambda c: int(c)):
+            cid_int = int(cid)
+            if cid_int in self._in_team:
+                continue  # 已在队, 排除
+            name = self._char_name(cid)
+            if kw and kw not in cid.lower() and kw not in name.lower():
+                continue
+            text = f"{cid} {name}"
+            hidden = self._is_hidden(cid)
+            no_collection = not self._in_collection(cid)
+            if hidden:
+                text += " " + str(i18n.tr("character_page.hidden_badge"))
+            if no_collection:
+                text += " " + str(i18n.tr("character_page.no_collection_badge"))
+            item = QListWidgetItem(text)
+            if hidden or no_collection:
+                item.setForeground(Qt.GlobalColor.gray)
+            item.setData(Qt.ItemDataRole.UserRole, cid)
+            self.item_list.addItem(item)
+
+    # ---------- 确认 ----------
+    def _on_ok(self):
+        cur = self.item_list.currentItem()
+        if cur is None:
+            QMessageBox.information(self, str(i18n.tr("dialogs.confirm")),
+                                    str(i18n.tr("character_page.select_first")))
+            return
+        cid = int(cur.data(Qt.ItemDataRole.UserRole))
+        self.char_name = self._char_name(cid)
+        # 隐藏角色警告 (先)
+        if self._is_hidden(cid):
+            if QMessageBox.warning(
+                    self, str(i18n.tr("dialogs.confirm")),
+                    str(i18n.tr("character_page.hidden_warn", name=self.char_name)),
+                    QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            ) != QMessageBox.StandardButton.Yes:
+                return
+        # 图鉴外角色警告 (后, 两个都触发时依次询问)
+        if not self._in_collection(cid):
+            if QMessageBox.warning(
+                    self, str(i18n.tr("dialogs.confirm")),
+                    str(i18n.tr("character_page.no_collection_warn",
+                                name=self.char_name)),
+                    QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            ) != QMessageBox.StandardButton.Yes:
+                return
+        # 默认 1 级
+        exp = int(self.level_exp.get("1", 0)) if self.level_exp else 0
+        hp = 12000
+        try:
+            meta = self.character_data.get(str(cid))
+            if isinstance(meta, dict):
+                hp = int(meta.get("default_hp") or hp)
+            self.data.execute(
+                "INSERT INTO tb_character (USER_DBID, CHARACTER_CID, LEVEL, EXP, "
+                "ASCEND, HP, TRANSCEND, TRANSCEND_TOTAL, SOLDIER_GRADE, "
+                "SOLDIER_GRADE_POINT, CREATED_DATE) "
+                "VALUES (?,?,1,?,0,?,0,0,0,0,?)",
+                (USER_DBID, cid, exp, hp, int(time.time())))
+        except Exception as ex:
+            QMessageBox.critical(self, str(i18n.tr("status.error")), str(ex))
+            return
+        self.accept()

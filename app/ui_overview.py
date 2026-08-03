@@ -111,7 +111,7 @@ class OverviewPage(QWidget):
         except Exception:
             pass
         mapped = self.names.resolve("ITEM_CID", CUR_GOLD)
-        name = mapped if mapped else "金币"
+        name = mapped if mapped else str(i18n.tr("overview_page.gold"))
         self._overview_cur_entries = {}
         row = QHBoxLayout()
         row.addWidget(self._kv_label(name))
@@ -173,7 +173,8 @@ class OverviewPage(QWidget):
                 cid = r["CHARACTER_CID"]
                 cname = self.names.resolve("CHARACTER_CID", cid)
                 disp = cname if cname else f"#{cid}"
-                text = f"{disp}  (Lv.{r['LEVEL']})"
+                text = str(i18n.tr("character_page.list_lv_fmt",
+                                   name=disp, lv=r["LEVEL"]))
                 btn = QPushButton(text)
                 btn.setCursor(Qt.CursorShape.PointingHandCursor)
                 btn.setStyleSheet(

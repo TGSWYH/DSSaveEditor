@@ -13,10 +13,11 @@ from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLineEdit, QCheckBox, QTableWidget,
     QTableWidgetItem, QPushButton, QMessageBox, QInputDialog, QDialog,
     QDialogButtonBox, QComboBox, QListWidget, QListWidgetItem, QSpinBox,
-    QLabel,
+    QLabel, QHeaderView,
 )
 
 from . import i18n
+from .config import DATA_DIR
 from .datasource import USER_DBID
 
 
@@ -43,7 +44,7 @@ class InventoryPage(QWidget):
         """加载 item_types.json; 失败返回 {} (新增道具对话框显示空列表, 不崩溃)。"""
         try:
             path = os.path.join(
-                os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                DATA_DIR,
                 "item_types.json",
             )
             if not os.path.exists(path):
@@ -74,6 +75,15 @@ class InventoryPage(QWidget):
         self.table = QTableWidget()
         self.table.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
         self.table.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
+        self.table.setAlternatingRowColors(True)
+        self.table.setShowGrid(False)
+        self.table.verticalHeader().setVisible(False)
+        self.table.verticalHeader().setDefaultSectionSize(30)
+        # 铺满策略: 末列拉伸填满 (其余列按内容自适应)
+        self.table.horizontalHeader().setStretchLastSection(True)
+        self.table.horizontalHeader().setSectionResizeMode(
+            QHeaderView.ResizeMode.Interactive
+        )
         outer.addWidget(self.table, 1)
 
         # 操作按钮
@@ -157,7 +167,19 @@ class InventoryPage(QWidget):
                    if r["table"] == "tb_stackable_item"
                    else i18n.tr("inventory_page.source_cook"))
             self.table.setItem(i, col + 3, QTableWidgetItem(str(src)))
-        self.table.resizeColumnsToContents()
+        # 铺满: 批量模式首列勾选固定 36px; 其余列按内容自适应; 末列拉伸填满
+        header = self.table.horizontalHeader()
+        header.setStretchLastSection(True)
+        if self._batch_mode:
+            self.table.setColumnWidth(0, 36)
+            header.setSectionResizeMode(0, QHeaderView.ResizeMode.Fixed)
+            start = 1
+        else:
+            start = 0
+        for c in range(start, self.table.columnCount() - 1):
+            header.setSectionResizeMode(c, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(self.table.columnCount() - 1,
+                                    QHeaderView.ResizeMode.Stretch)
 
     def _on_batch_toggled(self, checked):
         self._batch_mode = checked

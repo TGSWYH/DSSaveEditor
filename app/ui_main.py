@@ -46,6 +46,7 @@ from .ui_character import CharacterPage
 from .ui_equipment import EquipmentPage
 from .ui_inventory import InventoryPage
 from .ui_karma import KarmaPage
+from .ui_vehicle import VehiclePage
 from .ui_tools import DataToolsPage
 from .ui_backup import BackupDialog, SaveDiffDialog
 
@@ -142,6 +143,7 @@ class MainWindow(QMainWindow):
             "overview": OverviewPage(self.data, self.names, self),
             "character": CharacterPage(self.data, self.names, self),
             "karma": KarmaPage(self.data, self.names, self),
+            "vehicle": VehiclePage(self.data, self.names, self),
             "equipment": EquipmentPage(self.data, self.names, self),
             "inventory": InventoryPage(self.data, self.names, self),
             # 任务系统 7 页
@@ -159,6 +161,7 @@ class MainWindow(QMainWindow):
             ("📊 " + str(i18n.tr("nav.overview")), "overview"),
             ("👤 " + str(i18n.tr("nav.character")), "character"),
             ("🪞 " + str(i18n.tr("quest.nav_karma")), "karma"),
+            ("🐾 " + str(i18n.tr("quest.nav_vehicle")), "vehicle"),
             ("⚔ " + str(i18n.tr("nav.equipment")), "equipment"),
             ("🎒 " + str(i18n.tr("nav.inventory")), "inventory"),
             ("──────────", None),  # 分隔: 任务区
@@ -182,7 +185,7 @@ class MainWindow(QMainWindow):
             it.setData(Qt.ItemDataRole.UserRole, key)
             self.nav.addItem(it)
 
-        for key in ["overview", "character", "karma", "equipment", "inventory",
+        for key in ["overview", "character", "karma", "vehicle", "equipment", "inventory",
                     "quest_main", "quest_epic", "quest_character", "quest_region",
                     "quest_grade", "quest_other", "quest_unreleased", "tools"]:
             self.stack.addWidget(self.pages[key])
@@ -226,6 +229,24 @@ class MainWindow(QMainWindow):
         ts = datetime.datetime.now().strftime("%H:%M:%S")
         self.status.showMessage(f"[{ts}] {text}", 0)
 
+    # ---------- 未保存修改保护 ----------
+    def _confirm_discard(self):
+        """当前存档有未写入修改时, 确认是否放弃。
+        返回 True=可以继续(无修改或用户确认), False=取消操作。"""
+        if self.data.conn is None:
+            return True
+        try:
+            if not self.data.build_diff():
+                return True
+        except Exception:
+            return True
+        ret = QMessageBox.question(
+            self, str(i18n.tr("dialogs.confirm")),
+            str(i18n.tr("dialogs.discard_changes")),
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+        )
+        return ret == QMessageBox.StandardButton.Yes
+
     # ---------- 工具栏命令 ----------
     def cmd_open(self):
         start_dir = self.cfg.get("last_path", "") or os.path.expanduser("~")
@@ -234,6 +255,9 @@ class MainWindow(QMainWindow):
             start_dir, str(i18n.tr("dialogs.file_filter")),
         )
         if not path:
+            return
+        # 打开新存档会覆盖当前内存修改, 先确认
+        if not self._confirm_discard():
             return
         try:
             self.data.load(path)
@@ -266,6 +290,9 @@ class MainWindow(QMainWindow):
         # 还原功能已整合到备份管理对话框
         if not self.data.db_path:
             QMessageBox.information(self, "", str(i18n.tr("status.no_db")))
+            return
+        # 还原会覆盖当前内存修改, 先确认
+        if not self._confirm_discard():
             return
         dlg = BackupDialog(self.data, self)
         dlg.exec()
@@ -311,14 +338,18 @@ class MainWindow(QMainWindow):
 
     # ---------- 刷新页面 ----------
     def refresh_all_pages(self):
-        """刷新总览/角色/宿命烙印/装备/背包/数据工具/任务各页数据。"""
-        for key in ("overview", "character", "karma", "equipment", "inventory", "tools",
+        """刷新总览/角色/宿命烙印/使魔/装备/背包/数据工具/任务各页数据。"""
+        for key in ("overview", "character", "karma", "vehicle", "equipment", "inventory", "tools",
                     "quest_main", "quest_epic", "quest_character", "quest_region",
                     "quest_grade", "quest_other", "quest_unreleased"):
             self.pages[key].reload()
 
     # ---------- 关闭 ----------
     def closeEvent(self, e):
+        # 有未写入修改时, 关闭窗口前确认
+        if not self._confirm_discard():
+            e.ignore()
+            return
         try:
             self.data.close()
         except Exception:

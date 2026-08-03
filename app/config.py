@@ -3,13 +3,30 @@
 
 字段: language / theme / last_path
 文件损坏或缺失时使用默认值, 不抛异常。
+
+打包兼容 (PyInstaller onefile):
+  - 资源读取 (JSON/locales): sys._MEIPASS 临时解压目录 (只读)
+  - 配置写回 (config.json): exe 所在目录 (持久化, 不随临时目录消失)
 """
 import json
 import os
+import sys
 
-# 工具根目录 = app 包的上一级
-TOOL_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CONFIG_PATH = os.path.join(TOOL_ROOT, "config.json")
+if getattr(sys, "frozen", False):
+    # PyInstaller 打包运行
+    _BASE_DIR = os.path.dirname(sys.executable)        # exe 所在目录
+    _RESOURCE_DIR = getattr(sys, "_MEIPASS", _BASE_DIR)  # 解压的资源目录
+else:
+    # 源码运行: 工具根目录 = app 包的上一级
+    _BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    _RESOURCE_DIR = _BASE_DIR
+
+# 资源读取根目录 (打包后位于 _MEIPASS)
+TOOL_ROOT = _RESOURCE_DIR
+# 数据文件目录 (id_names.json 等, 源码=DSSaveEditor/data, 打包=_MEIPASS/data)
+DATA_DIR = os.path.join(_RESOURCE_DIR, "data")
+# 配置文件路径 (打包后位于 exe 旁, 可持久化)
+CONFIG_PATH = os.path.join(_BASE_DIR, "config.json")
 
 DEFAULT_CONFIG = {
     "language": "en",
