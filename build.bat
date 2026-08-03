@@ -1,17 +1,16 @@
 @echo off
 REM ============================================================
-REM  DSSaveEditor æ„å»ºè„šæœ¬ (PyInstaller onefile)
-REM  äº§ç‰©: dist\DSSaveEditor.exe (å•æ–‡ä»¶, åŒå‡»è¿è¡Œ)
-REM  è¦æ±‚: pip install pyinstaller
+REM  DSSaveEditor ¹¹½¨½Å±¾ (PyInstaller onefile)
+REM  ²úÎï: dist\DSSaveEditor.exe (µ¥ÎÄ¼ş, Ë«»÷ÔËĞĞ)
+REM  ÒªÇó: pip install pyinstaller
 REM ============================================================
-chcp 65001 >nul
 cd /d "%~dp0"
 
-echo [1/3] æ¸…ç†æ—§æ„å»ºäº§ç‰©...
+echo [1/3] ÇåÀí¾É¹¹½¨²úÎï...
 if exist build rmdir /s /q build
 if exist dist\DSSaveEditor.exe del /q dist\DSSaveEditor.exe
 
-echo [2/3] PyInstaller æ‰“åŒ… (onefile, windowed)...
+echo [2/3] PyInstaller ´ò°ü (onefile, windowed)...
 python -m PyInstaller --noconfirm --clean --onefile --windowed ^
   --name "DSSaveEditor" ^
   --icon "app.ico" ^
@@ -21,14 +20,14 @@ python -m PyInstaller --noconfirm --clean --onefile --windowed ^
 
 if errorlevel 1 (
     echo.
-    echo [å¤±è´¥] æ‰“åŒ…å‡ºé”™, è¯·æŸ¥çœ‹ä¸Šæ–¹æ—¥å¿—
+    echo [Ê§°Ü] ´ò°ü³ö´í, Çë²é¿´ÉÏ·½ÈÕÖ¾
     pause
     exit /b 1
 )
 
 echo.
-echo [3/3] æ„å»ºå®Œæˆ: dist\DSSaveEditor.exe
-echo        - å•æ–‡ä»¶, åŒå‡»å³ç”¨
-echo        - é…ç½®/å¤‡ä»½ä¼šä¿å­˜åœ¨ exe åŒç›®å½• (config.json / *.db.backup_*)
-echo        - é¦–æ¬¡å¯åŠ¨ä¼šç¨å¾®æ…¢ (è‡ªè§£å‹è¿è¡Œåº“), å±æ­£å¸¸ç°è±¡
+echo [3/3] ¹¹½¨Íê³É: dist\DSSaveEditor.exe
+echo        - µ¥ÎÄ¼ş, Ë«»÷¼´ÓÃ
+echo        - ÅäÖÃ/±¸·İ»á±£´æÔÚ exe Í¬Ä¿Â¼ (config.json / *.db.backup_*)
+echo        - Ê×´ÎÆô¶¯»áÉÔÎ¢Âı (×Ô½âÑ¹ÔËĞĞ¿â), ÊôÕı³£ÏÖÏó
 pause
