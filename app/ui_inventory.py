@@ -333,7 +333,6 @@ class AddItemDialog(QDialog):
         self.type_combo = QComboBox()
         self.type_combo.addItem(str(i18n.tr("inventory_page.type_stack")), "stackable")
         self.type_combo.addItem(str(i18n.tr("inventory_page.type_cook")), "cook")
-        self.type_combo.addItem(str(i18n.tr("inventory_page.type_gem")), "gem")
         self.type_combo.currentIndexChanged.connect(lambda _i: self._refresh_list())
         type_row.addWidget(self.type_combo, 1)
         lay.addLayout(type_row)
@@ -396,8 +395,7 @@ class AddItemDialog(QDialog):
                 return v
 
     def _on_ok(self):
-        """校验并写入: 堆叠物品 INSERT OR REPLACE; 料理/符文生成新 ITEM_DBID。
-        gem 每件独立实例, 数量=N 时循环插入 N 个 (各自不同的 ITEM_DBID)。"""
+        """校验并写入: 堆叠物品 INSERT OR REPLACE; 料理生成新 ITEM_DBID。"""
         cur = self.item_list.currentItem()
         if cur is None:
             QMessageBox.information(self, str(i18n.tr("dialogs.confirm")),
@@ -417,15 +415,6 @@ class AddItemDialog(QDialog):
                     "SPECIAL_BUFF_CID1, SPECIAL_BUFF_CID2, STACK_CNT, "
                     "CREATED_DATE, DELETED_DATE) VALUES (?,?,?,0,0,?,?,0)",
                     (USER_DBID, new_dbid, cid, cnt, now))
-            elif kind == "gem":
-                # 符文: 每件独立实例, STAT_INFO_CID=0 (属性 CID 来自未导出的 GemNewStatData)
-                for _ in range(cnt):
-                    new_dbid = self._new_item_dbid("tb_gem")
-                    self.data.execute(
-                        "INSERT INTO tb_gem (ITEM_DBID, USER_DBID, ITEM_CID, "
-                        "STAT_INFO_CID, IS_LOCK, CREATED_DATE, DELETED_DATE) "
-                        "VALUES (?,?,?,0,0,?,0)",
-                        (new_dbid, USER_DBID, cid, now))
             else:
                 self.data.execute(
                     "INSERT OR REPLACE INTO tb_stackable_item "

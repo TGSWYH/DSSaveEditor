@@ -117,7 +117,21 @@
     "nav_other": "其他",
     "nav_karma": "宿命烙印",
     "nav_unreleased": "未开放任务",
-    "nav_vehicle": "使魔"
+    "nav_vehicle": "使魔",
+    "nav_rune": "符文"
+  },
+  "rune_page": {
+    "title": "符文",
+    "hint": "符文可装备到装备的符文槽中，为装备提供额外属性",
+    "add": "+ 新增符文",
+    "delete": "删除选中",
+    "search": "搜索符文名/ID",
+    "count": "数量",
+    "add_title": "新增符文",
+    "select_first": "请先选择符文",
+    "added": "已新增 {n} 个符文",
+    "delete_confirm": "确定删除选中的符文？此操作不可撤销",
+    "deleted": "已删除 {n} 个符文"
   },
   "vehicle_page": {
     "title": "使魔",

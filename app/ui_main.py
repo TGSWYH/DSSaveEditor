@@ -47,6 +47,7 @@ from .ui_equipment import EquipmentPage
 from .ui_inventory import InventoryPage
 from .ui_karma import KarmaPage
 from .ui_vehicle import VehiclePage
+from .ui_rune import RunePage
 from .ui_tools import DataToolsPage
 from .ui_backup import BackupDialog, SaveDiffDialog
 
@@ -144,6 +145,7 @@ class MainWindow(QMainWindow):
             "character": CharacterPage(self.data, self.names, self),
             "karma": KarmaPage(self.data, self.names, self),
             "vehicle": VehiclePage(self.data, self.names, self),
+            "rune": RunePage(self.data, self.names, self),
             "equipment": EquipmentPage(self.data, self.names, self),
             "inventory": InventoryPage(self.data, self.names, self),
             # 任务系统 7 页
@@ -162,6 +164,7 @@ class MainWindow(QMainWindow):
             ("👤 " + str(i18n.tr("nav.character")), "character"),
             ("🪞 " + str(i18n.tr("quest.nav_karma")), "karma"),
             ("🐾 " + str(i18n.tr("quest.nav_vehicle")), "vehicle"),
+            ("🔮 " + str(i18n.tr("quest.nav_rune")), "rune"),
             ("⚔ " + str(i18n.tr("nav.equipment")), "equipment"),
             ("🎒 " + str(i18n.tr("nav.inventory")), "inventory"),
             ("──────────", None),  # 分隔: 任务区
@@ -185,7 +188,7 @@ class MainWindow(QMainWindow):
             it.setData(Qt.ItemDataRole.UserRole, key)
             self.nav.addItem(it)
 
-        for key in ["overview", "character", "karma", "vehicle", "equipment", "inventory",
+        for key in ["overview", "character", "karma", "vehicle", "rune", "equipment", "inventory",
                     "quest_main", "quest_epic", "quest_character", "quest_region",
                     "quest_grade", "quest_other", "quest_unreleased", "tools"]:
             self.stack.addWidget(self.pages[key])
@@ -338,8 +341,8 @@ class MainWindow(QMainWindow):
 
     # ---------- 刷新页面 ----------
     def refresh_all_pages(self):
-        """刷新总览/角色/宿命烙印/使魔/装备/背包/数据工具/任务各页数据。"""
-        for key in ("overview", "character", "karma", "vehicle", "equipment", "inventory", "tools",
+        """刷新总览/角色/宿命烙印/使魔/符文/装备/背包/数据工具/任务各页数据。"""
+        for key in ("overview", "character", "karma", "vehicle", "rune", "equipment", "inventory", "tools",
                     "quest_main", "quest_epic", "quest_character", "quest_region",
                     "quest_grade", "quest_other", "quest_unreleased"):
             self.pages[key].reload()

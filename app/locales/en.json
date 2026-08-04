@@ -117,7 +117,21 @@
     "nav_other": "Other",
     "nav_karma": "Karma Seals",
     "nav_unreleased": "Unreleased Quests",
-    "nav_vehicle": "Familiars"
+    "nav_vehicle": "Familiars",
+    "nav_rune": "Runes"
+  },
+  "rune_page": {
+    "title": "Runes",
+    "hint": "Runes can be engraved into equipment gem sockets to grant bonus stats",
+    "add": "+ Add Rune",
+    "delete": "Delete Selected",
+    "search": "Search rune name/ID",
+    "count": "Count",
+    "add_title": "Add Rune",
+    "select_first": "Select a rune first",
+    "added": "Added {n} runes",
+    "delete_confirm": "Delete the selected rune? This cannot be undone",
+    "deleted": "Deleted {n} runes"
   },
   "vehicle_page": {
     "title": "Familiars",
