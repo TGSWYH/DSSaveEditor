@@ -291,8 +291,15 @@
     "gem_updated": "Gem socket updated",
     "gem_need_tool": "The Craftsman's Fine Tool is required to unlock the gem socket",
     "gem_effect": "Effect",
+    "gem_engrave": "Engrave",
+    "gem_engrave_hint": "Select a rune to engrave",
+    "gem_engraved_done": "Engraved: {name}",
+    "gem_detach": "Detach Rune",
+    "gem_detach_confirm": "Detach rune {name}?",
+    "gem_detached": "Rune detached",
     "dbid_fmt": "ITEM_DBID: {dbid}  ·  ITEM_CID: {cid}",
-    "series_fmt": "Series {series}"
+    "series_fmt": "Series {series}",
+    "gem_engrave_none": "No runes available to engrave (all are engraved on other equipment)"
   },
   "inventory_page": {
     "search": "Search items",

@@ -291,8 +291,15 @@
     "gem_updated": "符文槽已更新",
     "gem_need_tool": "需要「无名匠人的精工工具」才能解锁符文槽",
     "gem_effect": "效果",
+    "gem_engrave": "镌刻",
+    "gem_engrave_hint": "选择要镌刻的符文",
+    "gem_engraved_done": "已镌刻：{name}",
+    "gem_detach": "拆卸符文",
+    "gem_detach_confirm": "确定拆卸符文 {name}？",
+    "gem_detached": "已拆卸符文",
     "dbid_fmt": "ITEM_DBID: {dbid}  ·  ITEM_CID: {cid}",
-    "series_fmt": "系列 {series}"
+    "series_fmt": "系列 {series}",
+    "gem_engrave_none": "没有可镌刻的符文（均已镌刻到其他装备）"
   },
   "inventory_page": {
     "search": "搜索物品",

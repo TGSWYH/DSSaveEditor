@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """符文页 (RunePage + AddRuneDialog): 左符文列表 (自定义行) + 新增/删除。
 
-tb_gem 每件符文独立实例 (ITEM_DBID 大数); 属性效果从 gem_stat.json 格式化。
+tb_gem 每件符文独立实例 (ITEM_DBID 大数); 属性效果从 gem_stat.json (GemNewStatData) 格式化。
 """
 
 import os
@@ -34,7 +34,7 @@ class RunePage(QWidget):
         self.data = data
         self.names = names
         self.main_window = main_window
-        # 符文属性表 (gem_stat.json: {cid: {s1, v1, s2, v2}})
+        # 符文属性表 (gem_stat.json: {STAT_INFO_CID: {stat, ratio}})
         self.gem_stat = self._load_gem_stat()
         # 属性名映射 (stat_names.json stat_key)
         self.stat_names = self._load_stat_names()
@@ -143,31 +143,15 @@ class RunePage(QWidget):
             return str(resolved)
         return f"#{cid}"
 
-    def _effect_text(self, cid):
-        """符文属性效果: 参考装备页逻辑 (s1/s2 非 TYPE_NONE 时拼接)。"""
-        info = (self.gem_stat or {}).get(str(cid))
+    def _effect_text(self, stat_cid):
+        """符文属性类型: 按实例 STAT_INFO_CID 查 gem_stat (GemNewStatData).
+        gem_stat.json: {STAT_INFO_CID: {"stat": StatList, "ratio": 档位}};
+        只显示属性类型 (游戏内数值由客户端公式计算, 数据表未导出, 以游戏为准)。"""
+        info = (self.gem_stat or {}).get(str(stat_cid))
         if not info:
             return "-"
-        parts = []
-        for key, val in (("s1", "v1"), ("s2", "v2")):
-            stat = info.get(key)
-            if not stat or stat == "TYPE_NONE":
-                continue
-            parts.append(self._format_stat(stat, info.get(val)))
-        return " / ".join(parts) if parts else "-"
-
-    def _format_stat(self, stat, val):
-        name = self._stat_cn(stat) or stat
-        try:
-            num = float(val)
-        except (TypeError, ValueError):
-            return f"{name} +{val}" if val is not None else name
-        is_pct = ("_Per" in str(stat)) or (0 < num < 1)
-        if is_pct:
-            return f"{name} +{num * 100:.0f}%"
-        if num.is_integer():
-            return f"{name} +{int(num)}"
-        return f"{name} +{num:g}"
+        name = self._stat_cn(info.get("stat")) or info.get("stat")
+        return str(name) if name else "-"
 
     def _stat_cn(self, stat):
         """属性英文名 -> 本地化名 (stat_key, 大小写无关匹配); 找不到返回 None。"""
@@ -189,14 +173,14 @@ class RunePage(QWidget):
             name = self._rune_name(cid)
             if kw and kw not in str(cid).lower() and kw not in name.lower():
                 continue
-            row = self._make_row_widget(cid, dbid, name)
+            row = self._make_row_widget(cid, dbid, name, r["STAT_INFO_CID"])
             item = QListWidgetItem()
             item.setSizeHint(QSize(0, row.height()))
             item.setData(Qt.ItemDataRole.UserRole, dbid)
             self.rune_list.addItem(item)
             self.rune_list.setItemWidget(item, row)
 
-    def _make_row_widget(self, cid, dbid, name):
+    def _make_row_widget(self, cid, dbid, name, stat_cid):
         """单行: 第一行 符文名(粗体) + 属性效果(灰); 第二行 DBID 后 6 位(更小灰字)。"""
         w = QWidget()
         lay = QVBoxLayout(w)
@@ -211,7 +195,7 @@ class RunePage(QWidget):
         name_lbl.setFont(f)
         top.addWidget(name_lbl)
         top.addStretch(1)
-        eff = self._effect_text(cid)
+        eff = self._effect_text(stat_cid)
         eff_lbl = QLabel(eff)
         eff_lbl.setStyleSheet("color: #98c379; font-size: 9pt;")
         top.addWidget(eff_lbl)
@@ -370,14 +354,21 @@ class AddRuneDialog(QDialog):
         cid = int(cur.data(Qt.ItemDataRole.UserRole))
         cnt = self.count_spin.value()
         now = int(time.time())
+        # STAT_INFO_CID = GemNewStatData.GemStatID, 游戏据此关联符文属性+档位 (0 会被游戏忽略)。
+        # ITEM_CID 结构 1310XYZ: X=品质(0破损/1完整/2精炼/3璀璨/4完美), YZ=系别(01斗志..05增幅)。
+        # GemNewStatData 组 = 品质*100 + 系别偏移 (100-104破损, 200-204完整, 300-304精炼, 400-404璀璨, 500-504完美);
+        # GemStatID = 组*100 + 档位 (01=100%, 02=80%..); 这里取 100% 档。
+        quality = (cid // 100) % 10        # 0..4
+        series = cid % 100                 # 1..5
+        stat_cid = ((quality + 1) * 100 + (series - 1)) * 100 + 1
         try:
             for _ in range(cnt):
                 new_dbid = self._new_item_dbid()
                 self.data.execute(
                     "INSERT INTO tb_gem (ITEM_DBID, USER_DBID, ITEM_CID, "
                     "STAT_INFO_CID, IS_LOCK, CREATED_DATE, DELETED_DATE) "
-                    "VALUES (?,?,?,0,0,?,0)",
-                    (new_dbid, USER_DBID, cid, now))
+                    "VALUES (?,?,?,?,0,?,0)",
+                    (new_dbid, USER_DBID, cid, stat_cid, now))
         except Exception as ex:
             QMessageBox.critical(self, str(i18n.tr("status.error")), str(ex))
             return

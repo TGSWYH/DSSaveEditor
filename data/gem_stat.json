@@ -1,1 +1,482 @@
-{"1310001": {"s1": "Attack", "v1": 45, "s2": "TYPE_NONE", "v2": 0.0}, "1310002": {"s1": "Attack_Per", "v1": 0.05, "s2": "TYPE_NONE", "v2": 0.0}, "1310003": {"s1": "Defence", "v1": 30, "s2": "TYPE_NONE", "v2": 0.0}, "1310004": {"s1": "Defence_Per", "v1": 0.07, "s2": "TYPE_NONE", "v2": 0.0}, "1310005": {"s1": "MAXHP", "v1": 500, "s2": "TYPE_NONE", "v2": 0.0}, "1310006": {"s1": "MAXHP_Per", "v1": 0.07, "s2": "TYPE_NONE", "v2": 0.0}, "1310101": {"s1": "Attack", "v1": 60, "s2": "TYPE_NONE", "v2": 0.0}, "1310102": {"s1": "Attack_Per", "v1": 0.07, "s2": "TYPE_NONE", "v2": 0.0}, "1310103": {"s1": "Defence", "v1": 40, "s2": "TYPE_NONE", "v2": 0.0}, "1310104": {"s1": "Defence_Per", "v1": 0.1, "s2": "TYPE_NONE", "v2": 0.0}, "1310105": {"s1": "MAXHP", "v1": 700, "s2": "TYPE_NONE", "v2": 0.0}, "1310106": {"s1": "MAXHP_Per", "v1": 0.1, "s2": "TYPE_NONE", "v2": 0.0}, "1310201": {"s1": "Attack", "v1": 85, "s2": "TYPE_NONE", "v2": 0.0}, "1310202": {"s1": "Attack_Per", "v1": 0.1, "s2": "TYPE_NONE", "v2": 0.0}, "1310203": {"s1": "Defence", "v1": 60, "s2": "TYPE_NONE", "v2": 0.0}, "1310204": {"s1": "Defence_Per", "v1": 0.15, "s2": "TYPE_NONE", "v2": 0.0}, "1310205": {"s1": "MAXHP", "v1": 1000, "s2": "TYPE_NONE", "v2": 0.0}, "1310206": {"s1": "MAXHP_Per", "v1": 0.15, "s2": "TYPE_NONE", "v2": 0.0}, "1310301": {"s1": "Attack", "v1": 85, "s2": "TYPE_NONE", "v2": 0.0}, "1310302": {"s1": "Attack_Per", "v1": 0.1, "s2": "TYPE_NONE", "v2": 0.0}, "1310303": {"s1": "Defence", "v1": 60, "s2": "TYPE_NONE", "v2": 0.0}, "1310304": {"s1": "Defence_Per", "v1": 0.15, "s2": "TYPE_NONE", "v2": 0.0}, "1310305": {"s1": "MAXHP", "v1": 1000, "s2": "TYPE_NONE", "v2": 0.0}, "1310306": {"s1": "MAXHP_Per", "v1": 0.15, "s2": "TYPE_NONE", "v2": 0.0}, "1310401": {"s1": "Attack", "v1": 85, "s2": "TYPE_NONE", "v2": 0.0}, "1310402": {"s1": "Attack_Per", "v1": 0.1, "s2": "TYPE_NONE", "v2": 0.0}, "1310403": {"s1": "Defence", "v1": 60, "s2": "TYPE_NONE", "v2": 0.0}, "1310404": {"s1": "Defence_Per", "v1": 0.15, "s2": "TYPE_NONE", "v2": 0.0}, "1310405": {"s1": "MAXHP", "v1": 1000, "s2": "TYPE_NONE", "v2": 0.0}, "1310406": {"s1": "MAXHP_Per", "v1": 0.15, "s2": "TYPE_NONE", "v2": 0.0}}
+{
+  "10001": {
+    "stat": "Attack",
+    "ratio": 1
+  },
+  "10002": {
+    "stat": "Attack",
+    "ratio": 0.8
+  },
+  "10003": {
+    "stat": "Attack",
+    "ratio": 0.6
+  },
+  "10101": {
+    "stat": "Defence",
+    "ratio": 1
+  },
+  "10102": {
+    "stat": "Defence",
+    "ratio": 0.8
+  },
+  "10103": {
+    "stat": "Defence",
+    "ratio": 0.6
+  },
+  "10201": {
+    "stat": "MAXHP",
+    "ratio": 1
+  },
+  "10202": {
+    "stat": "MAXHP",
+    "ratio": 0.8
+  },
+  "10203": {
+    "stat": "MAXHP",
+    "ratio": 0.6
+  },
+  "10301": {
+    "stat": "Critical_Per",
+    "ratio": 1
+  },
+  "10302": {
+    "stat": "Critical_Per",
+    "ratio": 0.8
+  },
+  "10303": {
+    "stat": "Critical_Per",
+    "ratio": 0.6
+  },
+  "10401": {
+    "stat": "CriticalDmg_Per",
+    "ratio": 1
+  },
+  "10402": {
+    "stat": "CriticalDmg_Per",
+    "ratio": 0.8
+  },
+  "10403": {
+    "stat": "CriticalDmg_Per",
+    "ratio": 0.6
+  },
+  "20001": {
+    "stat": "Attack",
+    "ratio": 1
+  },
+  "20002": {
+    "stat": "Attack",
+    "ratio": 0.8
+  },
+  "20003": {
+    "stat": "Attack",
+    "ratio": 0.6
+  },
+  "20101": {
+    "stat": "Defence",
+    "ratio": 1
+  },
+  "20102": {
+    "stat": "Defence",
+    "ratio": 0.8
+  },
+  "20103": {
+    "stat": "Defence",
+    "ratio": 0.6
+  },
+  "20201": {
+    "stat": "MAXHP",
+    "ratio": 1
+  },
+  "20202": {
+    "stat": "MAXHP",
+    "ratio": 0.8
+  },
+  "20203": {
+    "stat": "MAXHP",
+    "ratio": 0.6
+  },
+  "20301": {
+    "stat": "Critical_Per",
+    "ratio": 1
+  },
+  "20302": {
+    "stat": "Critical_Per",
+    "ratio": 0.8
+  },
+  "20303": {
+    "stat": "Critical_Per",
+    "ratio": 0.6
+  },
+  "20401": {
+    "stat": "CriticalDmg_Per",
+    "ratio": 1
+  },
+  "20402": {
+    "stat": "CriticalDmg_Per",
+    "ratio": 0.8
+  },
+  "20403": {
+    "stat": "CriticalDmg_Per",
+    "ratio": 0.6
+  },
+  "30001": {
+    "stat": "Attack",
+    "ratio": 1
+  },
+  "30002": {
+    "stat": "Attack",
+    "ratio": 0.9
+  },
+  "30003": {
+    "stat": "Attack",
+    "ratio": 0.8
+  },
+  "30004": {
+    "stat": "Attack",
+    "ratio": 0.7
+  },
+  "30101": {
+    "stat": "Defence",
+    "ratio": 1
+  },
+  "30102": {
+    "stat": "Defence",
+    "ratio": 0.9
+  },
+  "30103": {
+    "stat": "Defence",
+    "ratio": 0.8
+  },
+  "30104": {
+    "stat": "Defence",
+    "ratio": 0.7
+  },
+  "30201": {
+    "stat": "MAXHP",
+    "ratio": 1
+  },
+  "30202": {
+    "stat": "MAXHP",
+    "ratio": 0.9
+  },
+  "30203": {
+    "stat": "MAXHP",
+    "ratio": 0.8
+  },
+  "30204": {
+    "stat": "MAXHP",
+    "ratio": 0.7
+  },
+  "30301": {
+    "stat": "Critical_Per",
+    "ratio": 1
+  },
+  "30302": {
+    "stat": "Critical_Per",
+    "ratio": 0.9
+  },
+  "30303": {
+    "stat": "Critical_Per",
+    "ratio": 0.8
+  },
+  "30304": {
+    "stat": "Critical_Per",
+    "ratio": 0.7
+  },
+  "30401": {
+    "stat": "CriticalDmg_Per",
+    "ratio": 1
+  },
+  "30402": {
+    "stat": "CriticalDmg_Per",
+    "ratio": 0.9
+  },
+  "30403": {
+    "stat": "CriticalDmg_Per",
+    "ratio": 0.8
+  },
+  "30404": {
+    "stat": "CriticalDmg_Per",
+    "ratio": 0.7
+  },
+  "40001": {
+    "stat": "Attack",
+    "ratio": 1
+  },
+  "40002": {
+    "stat": "Attack",
+    "ratio": 0.9
+  },
+  "40003": {
+    "stat": "Attack",
+    "ratio": 0.8
+  },
+  "40004": {
+    "stat": "Attack",
+    "ratio": 0.7
+  },
+  "40005": {
+    "stat": "Attack",
+    "ratio": 0.6
+  },
+  "40101": {
+    "stat": "Defence",
+    "ratio": 1
+  },
+  "40102": {
+    "stat": "Defence",
+    "ratio": 0.9
+  },
+  "40103": {
+    "stat": "Defence",
+    "ratio": 0.8
+  },
+  "40104": {
+    "stat": "Defence",
+    "ratio": 0.7
+  },
+  "40105": {
+    "stat": "Defence",
+    "ratio": 0.6
+  },
+  "40201": {
+    "stat": "MAXHP",
+    "ratio": 1
+  },
+  "40202": {
+    "stat": "MAXHP",
+    "ratio": 0.9
+  },
+  "40203": {
+    "stat": "MAXHP",
+    "ratio": 0.8
+  },
+  "40204": {
+    "stat": "MAXHP",
+    "ratio": 0.7
+  },
+  "40205": {
+    "stat": "MAXHP",
+    "ratio": 0.6
+  },
+  "40301": {
+    "stat": "Critical_Per",
+    "ratio": 1
+  },
+  "40302": {
+    "stat": "Critical_Per",
+    "ratio": 0.9
+  },
+  "40303": {
+    "stat": "Critical_Per",
+    "ratio": 0.8
+  },
+  "40304": {
+    "stat": "Critical_Per",
+    "ratio": 0.7
+  },
+  "40305": {
+    "stat": "Critical_Per",
+    "ratio": 0.6
+  },
+  "40401": {
+    "stat": "CriticalDmg_Per",
+    "ratio": 1
+  },
+  "40402": {
+    "stat": "CriticalDmg_Per",
+    "ratio": 0.9
+  },
+  "40403": {
+    "stat": "CriticalDmg_Per",
+    "ratio": 0.8
+  },
+  "40404": {
+    "stat": "CriticalDmg_Per",
+    "ratio": 0.7
+  },
+  "40405": {
+    "stat": "CriticalDmg_Per",
+    "ratio": 0.6
+  },
+  "50001": {
+    "stat": "Attack",
+    "ratio": 1
+  },
+  "50002": {
+    "stat": "Attack",
+    "ratio": 0.95
+  },
+  "50003": {
+    "stat": "Attack",
+    "ratio": 0.9
+  },
+  "50004": {
+    "stat": "Attack",
+    "ratio": 0.85
+  },
+  "50005": {
+    "stat": "Attack",
+    "ratio": 0.8
+  },
+  "50006": {
+    "stat": "Attack",
+    "ratio": 0.75
+  },
+  "50007": {
+    "stat": "Attack",
+    "ratio": 0.7
+  },
+  "50008": {
+    "stat": "Attack",
+    "ratio": 0.65
+  },
+  "50009": {
+    "stat": "Attack",
+    "ratio": 0.6
+  },
+  "50101": {
+    "stat": "Defence",
+    "ratio": 1
+  },
+  "50102": {
+    "stat": "Defence",
+    "ratio": 0.95
+  },
+  "50103": {
+    "stat": "Defence",
+    "ratio": 0.9
+  },
+  "50104": {
+    "stat": "Defence",
+    "ratio": 0.85
+  },
+  "50105": {
+    "stat": "Defence",
+    "ratio": 0.8
+  },
+  "50106": {
+    "stat": "Defence",
+    "ratio": 0.75
+  },
+  "50107": {
+    "stat": "Defence",
+    "ratio": 0.7
+  },
+  "50108": {
+    "stat": "Defence",
+    "ratio": 0.65
+  },
+  "50109": {
+    "stat": "Defence",
+    "ratio": 0.6
+  },
+  "50201": {
+    "stat": "MAXHP",
+    "ratio": 1
+  },
+  "50202": {
+    "stat": "MAXHP",
+    "ratio": 0.95
+  },
+  "50203": {
+    "stat": "MAXHP",
+    "ratio": 0.9
+  },
+  "50204": {
+    "stat": "MAXHP",
+    "ratio": 0.85
+  },
+  "50205": {
+    "stat": "MAXHP",
+    "ratio": 0.8
+  },
+  "50206": {
+    "stat": "MAXHP",
+    "ratio": 0.75
+  },
+  "50207": {
+    "stat": "MAXHP",
+    "ratio": 0.7
+  },
+  "50208": {
+    "stat": "MAXHP",
+    "ratio": 0.65
+  },
+  "50209": {
+    "stat": "MAXHP",
+    "ratio": 0.6
+  },
+  "50301": {
+    "stat": "Critical_Per",
+    "ratio": 1
+  },
+  "50302": {
+    "stat": "Critical_Per",
+    "ratio": 0.95
+  },
+  "50303": {
+    "stat": "Critical_Per",
+    "ratio": 0.9
+  },
+  "50304": {
+    "stat": "Critical_Per",
+    "ratio": 0.85
+  },
+  "50305": {
+    "stat": "Critical_Per",
+    "ratio": 0.8
+  },
+  "50306": {
+    "stat": "Critical_Per",
+    "ratio": 0.75
+  },
+  "50307": {
+    "stat": "Critical_Per",
+    "ratio": 0.7
+  },
+  "50308": {
+    "stat": "Critical_Per",
+    "ratio": 0.65
+  },
+  "50309": {
+    "stat": "Critical_Per",
+    "ratio": 0.6
+  },
+  "50401": {
+    "stat": "CriticalDmg_Per",
+    "ratio": 1
+  },
+  "50402": {
+    "stat": "CriticalDmg_Per",
+    "ratio": 0.95
+  },
+  "50403": {
+    "stat": "CriticalDmg_Per",
+    "ratio": 0.9
+  },
+  "50404": {
+    "stat": "CriticalDmg_Per",
+    "ratio": 0.85
+  },
+  "50405": {
+    "stat": "CriticalDmg_Per",
+    "ratio": 0.8
+  },
+  "50406": {
+    "stat": "CriticalDmg_Per",
+    "ratio": 0.75
+  },
+  "50407": {
+    "stat": "CriticalDmg_Per",
+    "ratio": 0.7
+  },
+  "50408": {
+    "stat": "CriticalDmg_Per",
+    "ratio": 0.65
+  },
+  "50409": {
+    "stat": "CriticalDmg_Per",
+    "ratio": 0.6
+  }
+}

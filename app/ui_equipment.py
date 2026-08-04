@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """装备页 (EquipmentPage + AddEquipmentDialog): 左装备列表 + 右详情(属性+词条定制器+符文槽)。
 
-从 ui_main 拆出。符文槽: GEM_DBID 0/1 开放切换 + 持有符文列表 (tb_gem + gem_stat.json)。
+从 ui_main 拆出。符文槽: GEM_DBID 0/1 开放切换 + 持有符文列表 (tb_gem + gem_stat.json/GemNewStatData)。
 """
 
 import os
@@ -142,8 +142,9 @@ class EquipmentPage(QWidget):
 
     @staticmethod
     def _load_gem_stat():
-        """加载 gem_stat.json (符文属性表, 由 GemStatData.table 导出精简)。
-        结构: {id: {s1, v1, s2, v2}}; 失败返回 {} (符文列表属性列显示 "-")。"""
+        """加载 gem_stat.json (符文属性表, 由 GemNewStatData.table 导出)。
+        结构: {STAT_INFO_CID: {"stat": StatList, "ratio": 档位 1/0.8/0.6}};
+        失败返回 {} (符文列表属性列显示 "-")。"""
         try:
             path = os.path.join(
                 DATA_DIR,
@@ -429,18 +430,21 @@ class EquipmentPage(QWidget):
 
         # 1. 槽位状态行
         status_row = QHBoxLayout()
-        opened = gem_dbid == 1
+        # 语义: 0=未开放, 1=已开放未镌刻, 大数=已开放且已镌刻 (符文实例 ITEM_DBID)
+        opened = gem_dbid != 0
         status_lbl = QLabel(str(i18n.tr("equipment_page.gem_opened" if opened
                                          else "equipment_page.gem_closed")))
         status_lbl.setStyleSheet(
             "color: #98c379; font-weight: 600;" if opened else "color: #7f849c;")
         status_row.addWidget(status_lbl)
         status_row.addStretch(1)
-        toggle_btn = QPushButton(str(i18n.tr("equipment_page.gem_close" if opened
-                                             else "equipment_page.gem_open")))
-        toggle_btn.setCursor(Qt.CursorShape.PointingHandCursor)
-        toggle_btn.clicked.connect(lambda: self._toggle_gem_socket(dbid, gem_dbid))
-        status_row.addWidget(toggle_btn)
+        # 开放/关闭按钮仅 0/1 状态显示; 已镌刻(大数)状态由下方"拆卸符文"按钮管理
+        if gem_dbid in (0, 1):
+            toggle_btn = QPushButton(str(i18n.tr("equipment_page.gem_close" if gem_dbid == 1
+                                                 else "equipment_page.gem_open")))
+            toggle_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+            toggle_btn.clicked.connect(lambda: self._toggle_gem_socket(dbid, gem_dbid))
+            status_row.addWidget(toggle_btn)
         lay.addLayout(status_row)
 
         # 2. 解锁说明 (需精工工具, 显示当前持有数)
@@ -460,11 +464,46 @@ class EquipmentPage(QWidget):
         # 3. 已镌刻符文 (GEM_DBID 既非 0 也非 1: 未来镌刻后可能是符文实例 ITEM_DBID 大数)
         if gem_dbid not in (0, 1):
             engraved = self._engraved_gem_name(gem_dbid)
+            eng_row = QHBoxLayout()
             eng_lbl = QLabel(str(i18n.tr("equipment_page.gem_engraved")) +
                              f": {engraved}")
             eng_lbl.setStyleSheet("color: #e0af68; font-size: 9pt;")
             eng_lbl.setWordWrap(True)
-            lay.addWidget(eng_lbl)
+            eng_row.addWidget(eng_lbl, 1)
+            detach_btn = QPushButton(str(i18n.tr("equipment_page.gem_detach")))
+            detach_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+            detach_btn.clicked.connect(lambda: self._detach_gem(dbid, engraved))
+            eng_row.addWidget(detach_btn)
+            lay.addLayout(eng_row)
+
+        # 3.5 镌刻操作区 (槽已开放未镌刻: GEM_DBID == 1)
+        if gem_dbid == 1:
+            engrave_row = QHBoxLayout()
+            engrave_row.addWidget(QLabel(str(i18n.tr("equipment_page.gem_engrave_hint"))))
+            self._gem_combo = QComboBox()
+            # 过滤: 已被其他装备镌刻的符文实例不能重复镌刻
+            engraved_ids = self._engraved_gem_ids()
+            gems = [g for g in self._owned_gems()
+                    if g["ITEM_DBID"] not in engraved_ids]
+            for g in gems:
+                g_cid = g["ITEM_CID"]
+                g_name = self.names.resolve("ITEM_CID", g_cid) or f"#{g_cid}"
+                g_dbid = g["ITEM_DBID"]
+                self._gem_combo.addItem(
+                    f"{str(g_dbid)[-6:]} {g_name}  {self._gem_effect_text(g['STAT_INFO_CID'])}",
+                    g_dbid)
+            engrave_btn = QPushButton(str(i18n.tr("equipment_page.gem_engrave")))
+            engrave_btn.setObjectName("primaryBtn")
+            engrave_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+            engrave_btn.setEnabled(len(gems) > 0)
+            engrave_btn.clicked.connect(lambda: self._engrave_gem(dbid))
+            engrave_row.addWidget(self._gem_combo, 1)
+            engrave_row.addWidget(engrave_btn)
+            lay.addLayout(engrave_row)
+            if not gems:
+                none_lbl2 = QLabel(str(i18n.tr("equipment_page.gem_engrave_none")))
+                none_lbl2.setStyleSheet("color: #7f849c; font-size: 9pt;")
+                lay.addWidget(none_lbl2)
 
         # 4. 持有符文列表
         lay.addWidget(QLabel(str(i18n.tr("equipment_page.gem_owned"))))
@@ -490,7 +529,7 @@ class EquipmentPage(QWidget):
                 cid = g["ITEM_CID"]
                 gname = self.names.resolve("ITEM_CID", cid) or f"#{cid}"
                 table.setItem(i, 0, QTableWidgetItem(gname))
-                table.setItem(i, 1, QTableWidgetItem(self._gem_effect_text(cid)))
+                table.setItem(i, 1, QTableWidgetItem(self._gem_effect_text(g["STAT_INFO_CID"])))
             table.resizeColumnsToContents()
             table.setColumnWidth(0, max(table.columnWidth(0), 160))
             lay.addWidget(table)
@@ -509,6 +548,70 @@ class EquipmentPage(QWidget):
             return
         self.main_window.set_status(str(i18n.tr("equipment_page.gem_updated")))
         # 重新查询该行 (sqlite3.Row 不可变, 不能原地改 GEM_DBID), 再重建详情刷新状态
+        row = None
+        try:
+            rows = self.data.select_all("tb_equipment", "ITEM_DBID=?", (dbid,))
+            if rows:
+                row = rows[0]
+        except Exception:
+            row = None
+        if row is None:
+            for rr in self._all_rows:
+                if rr["ITEM_DBID"] == dbid:
+                    row = rr
+                    break
+        if row is not None:
+            self._render_detail(row)
+
+    def _engrave_gem(self, dbid):
+        """镌刻符文: 把选中符文实例 ITEM_DBID 写入装备 GEM_DBID; 完成后重建详情。"""
+        if self.data.db_path is None:
+            return
+        combo = getattr(self, "_gem_combo", None)
+        if combo is None or combo.currentData() is None:
+            return
+        rune_dbid = combo.currentData()
+        # 符文名 (供状态栏提示)
+        rune_name = str(rune_dbid)
+        try:
+            rows = self.data.select_all("tb_gem", "ITEM_DBID=?", (rune_dbid,))
+            if rows:
+                cid = rows[0]["ITEM_CID"]
+                rune_name = self.names.resolve("ITEM_CID", cid) or f"#{cid}"
+        except Exception:
+            pass
+        try:
+            self.data.execute(
+                "UPDATE tb_equipment SET GEM_DBID=? WHERE ITEM_DBID=?",
+                (rune_dbid, dbid))
+        except Exception as ex:
+            QMessageBox.critical(self, str(i18n.tr("status.error")), str(ex))
+            return
+        self.main_window.set_status(str(i18n.tr("equipment_page.gem_engraved_done",
+                                                name=rune_name)))
+        self._rerender_gem_detail(dbid)
+
+    def _detach_gem(self, dbid, rune_name):
+        """拆卸符文: GEM_DBID 恢复为 1 (槽保留); 确认后执行并重建详情。"""
+        if self.data.db_path is None:
+            return
+        if QMessageBox.question(
+                self, str(i18n.tr("dialogs.confirm")),
+                str(i18n.tr("equipment_page.gem_detach_confirm", name=rune_name))
+        ) != QMessageBox.StandardButton.Yes:
+            return
+        try:
+            self.data.execute(
+                "UPDATE tb_equipment SET GEM_DBID=1 WHERE ITEM_DBID=?",
+                (dbid,))
+        except Exception as ex:
+            QMessageBox.critical(self, str(i18n.tr("status.error")), str(ex))
+            return
+        self.main_window.set_status(str(i18n.tr("equipment_page.gem_detached")))
+        self._rerender_gem_detail(dbid)
+
+    def _rerender_gem_detail(self, dbid):
+        """重新查询装备行并重建详情 (sqlite3.Row 不可变, 用于镌刻/拆卸后刷新)。"""
         row = None
         try:
             rows = self.data.select_all("tb_equipment", "ITEM_DBID=?", (dbid,))
@@ -546,6 +649,22 @@ class EquipmentPage(QWidget):
             return []
         return sorted(rows, key=lambda r: r["ITEM_CID"])
 
+    def _engraved_gem_ids(self):
+        """所有已被装备镌刻的符文实例 ITEM_DBID 集合 (tb_equipment.GEM_DBID 非 0/1 值)。
+        同一个符文实例不能被镌刻到两件装备上, 镌刻下拉需过滤这些。"""
+        ids = set()
+        if not self.data.db_path:
+            return ids
+        try:
+            rows = self.data.select_all("tb_equipment")
+            for r in rows:
+                g = r["GEM_DBID"]
+                if g and g != 1:      # 0=未开放, 1=已开放未镌刻, 大数=已镌刻实例
+                    ids.add(g)
+        except Exception:
+            pass
+        return ids
+
     def _engraved_gem_name(self, gem_dbid):
         """按 GEM_DBID 尝试在 tb_gem 匹配符文实例 (ITEM_DBID=GEM_DBID); 匹配不到显示原值。"""
         if not self.data.db_path:
@@ -559,33 +678,16 @@ class EquipmentPage(QWidget):
             pass
         return str(gem_dbid)
 
-    def _gem_effect_text(self, cid):
-        """符文属性效果文本: 从 gem_stat 读 s1/v1 (s2/v2 非 TYPE_NONE 时追加)。
-        百分比属性 (含 _Per 或 0<小数<1) 显示为 +N%, 否则 +N; 无数据返回 "-"。"""
-        info = (self.gem_stat or {}).get(str(cid))
+    def _gem_effect_text(self, stat_cid):
+        """符文属性类型: 按实例 STAT_INFO_CID 查 gem_stat (GemNewStatData).
+        gem_stat.json: {STAT_INFO_CID: {"stat": StatList, "ratio": 档位}};
+        只显示属性类型 (游戏内数值由客户端公式计算, 数据表未导出, 以游戏为准);
+        无数据返回 "-" (如旧版写入的 STAT_INFO_CID=0 死数据)。"""
+        info = (self.gem_stat or {}).get(str(stat_cid))
         if not info:
             return "-"
-        parts = []
-        for key, val in (("s1", "v1"), ("s2", "v2")):
-            stat = info.get(key)
-            if not stat or stat == "TYPE_NONE":
-                continue
-            parts.append(self._format_gem_stat(stat, info.get(val)))
-        return " / ".join(parts) if parts else "-"
-
-    def _format_gem_stat(self, stat, val):
-        """格式化单个属性: "防御力 +30" / "攻击力提升 +7%" (百分比乘100)。"""
-        name = self._gem_stat_cn(stat) or stat
-        try:
-            num = float(val)
-        except (TypeError, ValueError):
-            return f"{name} +{val}" if val is not None else name
-        is_pct = ("_Per" in str(stat)) or (0 < num < 1)
-        if is_pct:
-            return f"{name} +{num * 100:.0f}%"
-        if num.is_integer():
-            return f"{name} +{int(num)}"
-        return f"{name} +{num:g}"
+        name = self._gem_stat_cn(info.get("stat")) or info.get("stat")
+        return str(name) if name else "-"
 
     def _gem_stat_cn(self, stat):
         """属性英文名 -> 本地化名 (stat_names.stat_key, 大小写无关匹配); 找不到返回原英文。"""
