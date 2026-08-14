@@ -106,7 +106,8 @@
     "currency": "Currency",
     "equipment": "Equipment",
     "tools": "Data Tools",
-    "inventory": "Inventory"
+    "inventory": "Inventory",
+    "repair": "Repair"
   },
   "quest": {
     "nav_main": "Main Quests",
@@ -418,5 +419,39 @@
   },
   "tools_page": {
     "notice": "Advanced: raw data tables below, for users familiar with database structures"
+  },
+  "repair_page": {
+    "tab_time": "Time Repair",
+    "time_title": "Time Fields",
+    "time_hint": "Detects abnormal time values (e.g. PLAY_TIME written as a huge negative value, which makes the game show -2.5B hours and fail to open the save). Click Scan, then Fix to reset abnormal values to valid ones.",
+    "btn_scan": "Scan",
+    "btn_fix": "Fix Abnormal",
+    "scan_pending": "Click Scan to check time fields.",
+    "scan_ok": "No abnormal time fields found.",
+    "scan_bad": "Found {n} abnormal time field(s). Click Fix to repair.",
+    "col_field": "Field",
+    "col_value": "Current Value",
+    "col_status": "Status",
+    "col_fix": "Proposed Fix",
+    "status_ok": "Normal",
+    "status_bad": "Abnormal",
+    "fix_confirm": "Repair {n} abnormal time field(s)? Backup will be created automatically on save.",
+    "fixed": "Repaired {n} field(s). Remember to Save the save file (auto backup before write).",
+    "play_fmt": "{h}h {m}m {s}s",
+    "time_play_time": "Play Time (seconds)",
+    "time_last_login": "Last Login",
+    "time_last_logout": "Last Logout",
+    "time_create_date": "Account Created",
+    "time_char_created": "Character Created",
+    "time_eq_created": "Equipment Created",
+    "time_eq_deleted": "Equipment Deleted",
+    "time_gem_created": "Rune Created",
+    "time_gem_deleted": "Rune Deleted",
+    "time_veh_created": "Mount Created",
+    "time_karma_created": "Karma Created",
+    "time_karma_deleted": "Karma Deleted",
+    "time_costume_created": "Costume Created",
+    "time_cook_created": "Cook Created",
+    "time_cook_deleted": "Cook Deleted"
   }
 }

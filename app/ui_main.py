@@ -49,6 +49,7 @@ from .ui_karma import KarmaPage
 from .ui_vehicle import VehiclePage
 from .ui_rune import RunePage
 from .ui_tools import DataToolsPage
+from .ui_repair import RepairPage
 from .ui_backup import BackupDialog, SaveDiffDialog
 
 
@@ -157,6 +158,7 @@ class MainWindow(QMainWindow):
             "quest_other": QuestPage(self.data, self.names, self, self.quest_mgr, "other"),
             "quest_unreleased": QuestPage(self.data, self.names, self, self.quest_mgr, "unreleased"),
             "tools": DataToolsPage(self.data, self.names, self),
+            "repair": RepairPage(self.data, self.names, self),
         }
         # 导航项 (emoji + 文案)
         nav_items = [
@@ -177,6 +179,7 @@ class MainWindow(QMainWindow):
             ("🕳 " + str(i18n.tr("quest.nav_unreleased")), "quest_unreleased"),
             ("──────────", None),  # 分隔: 工具区
             ("🛠 " + str(i18n.tr("nav.tools")), "tools"),
+            ("🧰 " + str(i18n.tr("nav.repair")), "repair"),
         ]
         for text, key in nav_items:
             it = QListWidgetItem(text)
@@ -190,7 +193,7 @@ class MainWindow(QMainWindow):
 
         for key in ["overview", "character", "karma", "vehicle", "rune", "equipment", "inventory",
                     "quest_main", "quest_epic", "quest_character", "quest_region",
-                    "quest_grade", "quest_other", "quest_unreleased", "tools"]:
+                    "quest_grade", "quest_other", "quest_unreleased", "tools", "repair"]:
             self.stack.addWidget(self.pages[key])
 
         # 总览点击角色 -> 切到角色页并选中
@@ -343,6 +346,7 @@ class MainWindow(QMainWindow):
     def refresh_all_pages(self):
         """刷新总览/角色/宿命烙印/使魔/符文/装备/背包/数据工具/任务各页数据。"""
         for key in ("overview", "character", "karma", "vehicle", "rune", "equipment", "inventory", "tools",
+                    "repair",
                     "quest_main", "quest_epic", "quest_character", "quest_region",
                     "quest_grade", "quest_other", "quest_unreleased"):
             self.pages[key].reload()

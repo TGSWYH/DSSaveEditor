@@ -106,7 +106,8 @@
     "currency": "资源货币",
     "equipment": "装备",
     "tools": "数据工具",
-    "inventory": "背包"
+    "inventory": "背包",
+    "repair": "异常修复"
   },
   "quest": {
     "nav_main": "主线任务",
@@ -418,5 +419,39 @@
   },
   "tools_page": {
     "notice": "高级功能：以下为原始数据表，供熟悉数据库结构的用户使用"
+  },
+  "repair_page": {
+    "tab_time": "时间修复",
+    "time_title": "时间字段",
+    "time_hint": "检测存档时间字段异常（如 PLAY_TIME 被写成巨大负值，导致游戏显示 -25 亿小时、存档无法打开）。点「扫描检测」再点「修复异常」将异常值重置为有效值。",
+    "btn_scan": "扫描检测",
+    "btn_fix": "修复异常",
+    "scan_pending": "点击「扫描检测」检查时间字段。",
+    "scan_ok": "未发现异常时间字段。",
+    "scan_bad": "发现 {n} 个异常时间字段，点击「修复异常」处理。",
+    "col_field": "字段",
+    "col_value": "当前值",
+    "col_status": "状态",
+    "col_fix": "建议修复值",
+    "status_ok": "正常",
+    "status_bad": "异常",
+    "fix_confirm": "确定修复 {n} 个异常时间字段？写入存档时会自动备份。",
+    "fixed": "已修复 {n} 个字段。记得保存存档（写入前自动备份）。",
+    "play_fmt": "{h}小时 {m}分 {s}秒",
+    "time_play_time": "游玩时间（秒）",
+    "time_last_login": "最近登录",
+    "time_last_logout": "最近登出",
+    "time_create_date": "账号创建",
+    "time_char_created": "角色创建时间",
+    "time_eq_created": "装备创建时间",
+    "time_eq_deleted": "装备删除时间",
+    "time_gem_created": "符文创建时间",
+    "time_gem_deleted": "符文删除时间",
+    "time_veh_created": "使魔创建时间",
+    "time_karma_created": "烙印创建时间",
+    "time_karma_deleted": "烙印删除时间",
+    "time_costume_created": "时装创建时间",
+    "time_cook_created": "料理创建时间",
+    "time_cook_deleted": "料理删除时间"
   }
 }
