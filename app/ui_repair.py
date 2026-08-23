@@ -1,11 +1,17 @@
 # -*- coding: utf-8 -*-
 """异常修复页 (RepairPage): QTabWidget 容器, 子功能 tab 承载各类存档异常修复。
 
-首个子功能: 时间修复 (TimeRepairTab) —— 检测并修复存档时间字段异常,
-如 PLAY_TIME 被写成负巨值导致游戏显示 -25 亿小时/无法打开存档。
+子功能:
+  1. 时间修复 (TimeRepairTab) —— 检测并修复存档时间字段异常,
+     如 PLAY_TIME 被写成负巨值导致游戏显示 -25 亿小时/无法打开存档。
+  2. 副本修复 (DungeonRepairTab) —— 主线/讨伐任务已完成但对应副本组
+     未写入 tb_active_dungeon (修改器完成主线时只写 quest_complete),
+     导致游戏内副本无法进入; 按 quest_dungeon_map 补齐缺失副本组。
 后续存档问题修复均在此页面新增子 tab。
 """
 
+import os
+import json
 import re
 import time
 import datetime
@@ -17,6 +23,7 @@ from PySide6.QtWidgets import (
 )
 
 from . import i18n
+from .config import DATA_DIR
 from .ui_common import make_card
 
 
@@ -272,10 +279,191 @@ class TimeRepairTab(QWidget):
 
 
 # ============================================================
+# 副本修复子页
+# ============================================================
+class DungeonRepairTab(QWidget):
+    """检测并修复副本组激活缺失。
+
+    真实游玩时, 主线任务的 ENTER_DUNGEON 步骤/讨伐任务通关 (组级 QUEST_CLEAR)
+    会把对应副本组写入 tb_active_dungeon; 修改器直接完成主线时只写了
+    tb_quest_complete, 导致副本组缺失, 游戏内副本无法进入。
+    规则: 已完成任务 -> quest_dungeon_map.json 对应副本组 -> 补齐。
+    排除: 无组定义 (晋升专用 30001/30002) 与剧情副本 10002 (攻城战,
+    真实游玩存档验证不进 active)。
+    """
+
+    # 剧情/一次性副本组: 真实游玩存档验证不常驻 active, 修复时跳过
+    SKIP_GROUPS = {10002}
+
+    def __init__(self, data, main_window):
+        super().__init__()
+        self.data = data
+        self.main_window = main_window
+        self.dungeon_groups = self._load_json("dungeon_groups.json")     # id -> {name,...}
+        self.quest_map = self._load_json("quest_dungeon_map.json")       # quest -> [groups]
+        self._missing = []      # [(group_id, quest_cid)]
+        self._build()
+
+    @staticmethod
+    def _load_json(name):
+        """加载 data 下 JSON; 失败返回 {}。"""
+        try:
+            path = os.path.join(DATA_DIR, name)
+            if not os.path.exists(path):
+                return {}
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            return data if isinstance(data, dict) else {}
+        except Exception:
+            return {}
+
+    def _build(self):
+        outer = QVBoxLayout(self)
+        outer.setContentsMargins(12, 12, 12, 12)
+        outer.setSpacing(8)
+
+        card, lay = make_card(str(i18n.tr("repair_page.dungeon_title")))
+        lay.setContentsMargins(12, 10, 12, 10)
+        lay.setSpacing(8)
+
+        hint = QLabel(str(i18n.tr("repair_page.dungeon_hint")))
+        hint.setStyleSheet("color: #7f849c; font-size: 9pt;")
+        hint.setWordWrap(True)
+        lay.addWidget(hint)
+
+        btn_row = QHBoxLayout()
+        btn_row.setSpacing(8)
+        self.scan_btn = QPushButton(str(i18n.tr("repair_page.btn_scan")))
+        self.scan_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.scan_btn.clicked.connect(self._scan)
+        btn_row.addWidget(self.scan_btn)
+        self.fix_btn = QPushButton(str(i18n.tr("repair_page.btn_fix")))
+        self.fix_btn.setObjectName("primaryBtn")
+        self.fix_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.fix_btn.setEnabled(False)
+        self.fix_btn.clicked.connect(self._fix)
+        btn_row.addWidget(self.fix_btn)
+        btn_row.addStretch(1)
+        lay.addLayout(btn_row)
+
+        self.summary_lbl = QLabel(str(i18n.tr("repair_page.dungeon_pending")))
+        self.summary_lbl.setStyleSheet("font-size: 9pt;")
+        lay.addWidget(self.summary_lbl)
+
+        self.table = QTableWidget(0, 3)
+        self.table.setHorizontalHeaderLabels([
+            str(i18n.tr("repair_page.col_group")),
+            str(i18n.tr("repair_page.col_unlock")),
+            str(i18n.tr("repair_page.col_status")),
+        ])
+        self.table.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
+        self.table.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
+        self.table.setAlternatingRowColors(True)
+        self.table.verticalHeader().setVisible(False)
+        self.table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
+        lay.addWidget(self.table, 1)
+
+        outer.addWidget(card)
+
+    def reload(self):
+        """页面切换/存档打开时自动刷新。"""
+        self._scan()
+
+    # ---------- 扫描 ----------
+    def _scan(self):
+        self._missing = []
+        self.fix_btn.setEnabled(False)
+        if not self.data.db_path:
+            self.summary_lbl.setText(str(i18n.tr("status.no_db")))
+            self.table.setRowCount(0)
+            return
+        if not self.quest_map:
+            self.summary_lbl.setText(str(i18n.tr("repair_page.dungeon_no_data")))
+            self.table.setRowCount(0)
+            return
+        try:
+            done = set(r["QUEST_CID"] for r in self.data.select_all("tb_quest_complete"))
+        except Exception:
+            done = set()
+        try:
+            active = set(r["DUNGEON_GROUP_CID"] for r in self.data.select_all("tb_active_dungeon"))
+        except Exception:
+            active = set()
+
+        # 期望激活的副本组: 已完成任务 -> quest_map
+        expect = set()
+        for quest_cid, groups in self.quest_map.items():
+            if int(quest_cid) not in done:
+                continue
+            for g in groups:
+                g = int(g)
+                if g in self.SKIP_GROUPS:
+                    continue
+                if str(g) not in self.dungeon_groups:
+                    continue       # 无组定义 (晋升专用等)
+                expect.add(g)
+
+        # 缺失列表 (排序: 期望顺序 -> id)
+        ordered = []
+        for quest_cid, groups in self.quest_map.items():
+            if int(quest_cid) not in done:
+                continue
+            for g in groups:
+                g = int(g)
+                if g in expect and g not in active and g not in [x[0] for x in ordered]:
+                    ordered.append((g, quest_cid))
+        self._missing = ordered
+
+        rows_out = []
+        for g, q in ordered:
+            info = self.dungeon_groups.get(str(g), {})
+            rows_out.append((g, info.get("name") or info.get("memo") or f"#{g}", q, "bad"))
+        n = len(rows_out)
+        self.table.setRowCount(n)
+        ok_text = str(i18n.tr("repair_page.status_bad"))
+        for i, (g, name, q, _st) in enumerate(rows_out):
+            self.table.setItem(i, 0, QTableWidgetItem(f"{g}  {name}"))
+            self.table.setItem(i, 1, QTableWidgetItem(str(i18n.tr("repair_page.unlock_quest", qid=q))))
+            item = QTableWidgetItem(ok_text)
+            item.setForeground(Qt.GlobalColor.red)
+            self.table.setItem(i, 2, item)
+        self.table.resizeColumnsToContents()
+        self.table.setColumnWidth(0, max(self.table.columnWidth(0), 260))
+
+        if n:
+            self.summary_lbl.setText(str(i18n.tr("repair_page.dungeon_bad", n=n)))
+            self.fix_btn.setEnabled(True)
+        else:
+            self.summary_lbl.setText(str(i18n.tr("repair_page.dungeon_ok")))
+
+    # ---------- 修复 ----------
+    def _fix(self):
+        if not self._missing:
+            return
+        if QMessageBox.question(
+                self, str(i18n.tr("dialogs.confirm")),
+                str(i18n.tr("repair_page.dungeon_fix_confirm", n=len(self._missing)))
+        ) != QMessageBox.StandardButton.Yes:
+            return
+        done = 0
+        try:
+            for g, _q in self._missing:
+                self.data.execute(
+                    "INSERT INTO tb_active_dungeon (USER_DBID, DUNGEON_GROUP_CID) VALUES (?,?)",
+                    (1000, g))
+                done += 1
+        except Exception as ex:
+            QMessageBox.critical(self, str(i18n.tr("status.error")), str(ex))
+            return
+        self.main_window.set_status(str(i18n.tr("repair_page.dungeon_fixed", n=done)))
+        self._scan()
+
+
+# ============================================================
 # 修复页容器
 # ============================================================
 class RepairPage(QWidget):
-    """异常修复页: QTabWidget 承载各子功能 (时间修复等)。"""
+    """异常修复页: QTabWidget 承载各子功能 (时间修复/副本修复等)。"""
 
     def __init__(self, data, names, main_window):
         super().__init__()
@@ -285,9 +473,12 @@ class RepairPage(QWidget):
         self.tabs = QTabWidget()
         self.time_tab = TimeRepairTab(data, main_window)
         self.tabs.addTab(self.time_tab, str(i18n.tr("repair_page.tab_time")))
+        self.dungeon_tab = DungeonRepairTab(data, main_window)
+        self.tabs.addTab(self.dungeon_tab, str(i18n.tr("repair_page.tab_dungeon")))
         outer = QVBoxLayout(self)
         outer.setContentsMargins(0, 0, 0, 0)
         outer.addWidget(self.tabs)
 
     def reload(self):
         self.time_tab.reload()
+        self.dungeon_tab.reload()

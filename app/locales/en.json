@@ -452,6 +452,18 @@
     "time_karma_deleted": "Karma Deleted",
     "time_costume_created": "Costume Created",
     "time_cook_created": "Cook Created",
-    "time_cook_deleted": "Cook Deleted"
+    "time_cook_deleted": "Cook Deleted",
+    "tab_dungeon": "Dungeon Repair",
+    "dungeon_title": "Dungeon Groups",
+    "dungeon_hint": "Completing main/suppression quests normally activates the corresponding dungeon groups in tb_active_dungeon. If quests were completed directly (only quest_complete written), these groups are missing and dungeons cannot be entered in game. Scan, then Fix to add the missing groups.",
+    "dungeon_pending": "Click Scan to check dungeon groups.",
+    "dungeon_no_data": "Dungeon data (quest_dungeon_map.json) missing.",
+    "dungeon_ok": "No missing dungeon groups.",
+    "dungeon_bad": "Found {n} missing dungeon group(s). Click Fix to add them.",
+    "col_group": "Dungeon Group",
+    "col_unlock": "Unlock Quest",
+    "dungeon_fix_confirm": "Add {n} missing dungeon group(s) to tb_active_dungeon? Backup will be created automatically on save.",
+    "dungeon_fixed": "Added {n} dungeon group(s). Remember to Save the save file.",
+    "unlock_quest": "Quest {qid} completed"
   }
 }

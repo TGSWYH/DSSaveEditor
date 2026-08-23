@@ -452,6 +452,18 @@
     "time_karma_deleted": "烙印删除时间",
     "time_costume_created": "时装创建时间",
     "time_cook_created": "料理创建时间",
-    "time_cook_deleted": "料理删除时间"
+    "time_cook_deleted": "料理删除时间",
+    "tab_dungeon": "副本修复",
+    "dungeon_title": "副本组",
+    "dungeon_hint": "正常游玩时, 主线任务进入副本步骤/讨伐任务通关会将对应副本组写入 tb_active_dungeon。若直接完成任务 (只写了 quest_complete), 副本组缺失, 游戏内副本无法进入。点「扫描检测」找出缺失副本组, 再点「修复异常」补齐。",
+    "dungeon_pending": "点击「扫描检测」检查副本组。",
+    "dungeon_no_data": "缺少副本数据文件 (quest_dungeon_map.json)。",
+    "dungeon_ok": "未发现缺失副本组。",
+    "dungeon_bad": "发现 {n} 个缺失副本组, 点击「修复异常」补齐。",
+    "col_group": "副本组",
+    "col_unlock": "解锁条件",
+    "dungeon_fix_confirm": "确定将 {n} 个缺失副本组写入 tb_active_dungeon？写入存档时会自动备份。",
+    "dungeon_fixed": "已补齐 {n} 个副本组。记得保存存档（写入前自动备份）。",
+    "unlock_quest": "任务 {qid} 已完成"
   }
 }

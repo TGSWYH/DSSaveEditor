@@ -1,0 +1,478 @@
+{
+ "10001": {
+  "id": 10001,
+  "memo": "용추종자 은신처",
+  "name": "龙之崇拜者藏身处",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "10002": {
+  "id": 10002,
+  "memo": "가우론 시나리오",
+  "name": "钢铁之心要塞守城战",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "10003": {
+  "id": 10003,
+  "memo": "용의 제단",
+  "name": "古龙之坛",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "10004": {
+  "id": 10004,
+  "memo": "거인이 잠든 곳",
+  "name": "巨人安息之所",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "10005": {
+  "id": 10005,
+  "memo": "탐욕의 무덤",
+  "name": "贪婪之墓",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "10006": {
+  "id": 10006,
+  "memo": "거대 웜의 둥지",
+  "name": "巨型龙虺巢穴",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "10007": {
+  "id": 10007,
+  "memo": "끝을 향한 추적",
+  "name": "追踪到底",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "10008": {
+  "id": 10008,
+  "memo": "하늘미궁 시나리오",
+  "name": "하늘미궁 시나리오",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "21002": {
+  "id": 21002,
+  "memo": "잊힌 지하 폐광",
+  "name": "被遗忘的地下废矿",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "11001": {
+  "id": 11001,
+  "memo": "하운드 동굴",
+  "name": "被座狼占据的洞穴",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "11011": {
+  "id": 11011,
+  "memo": "오염된 침소",
+  "name": "被腐化的安眠墓园",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "11012": {
+  "id": 11012,
+  "memo": "비극이 잠든 묘역 (지하묘역2층)",
+  "name": "悲剧沉睡的墓地",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "11013": {
+  "id": 11013,
+  "memo": "깨어난 회랑",
+  "name": "觉醒回廊",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "11014": {
+  "id": 11014,
+  "memo": "무너진 성역",
+  "name": "崩塌的圣域",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "11021": {
+  "id": 11021,
+  "memo": "은빛 엄니 도적단 물자 창고",
+  "name": "银牙盗贼团物资仓库",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "11022": {
+  "id": 11022,
+  "memo": "송곳니 도적단 투기장",
+  "name": "獠牙盗贼团斗技场",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "11023": {
+  "id": 11023,
+  "memo": "녹슨 엄니 도적단 보물 창고",
+  "name": "锈牙盗贼团的宝库",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "11031": {
+  "id": 11031,
+  "memo": "고블린 도적단 동굴",
+  "name": "哥布林盗贼团洞穴",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "11032": {
+  "id": 11032,
+  "memo": "와르그 사육장",
+  "name": "座狼饲养场",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "11033": {
+  "id": 11033,
+  "memo": "지하 고블린 부락",
+  "name": "地下哥布林的部落",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "11034": {
+  "id": 11034,
+  "memo": "검은 동굴 거점",
+  "name": "海崖洞窟据点",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "11041": {
+  "id": 11041,
+  "memo": "잿빛 성소",
+  "name": "灰烬圣所",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "11051": {
+  "id": 11051,
+  "memo": "뒤얽힌 뿌리의 숲",
+  "name": "纠缠之根森林",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "11061": {
+  "id": 11061,
+  "memo": "어두운 늪지대",
+  "name": "黑暗沼泽地",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "11071": {
+  "id": 11071,
+  "memo": "잿더미 성채",
+  "name": "灰烬城堡",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "11111": {
+  "id": 11111,
+  "memo": "바위 부족 기지",
+  "name": "岩石部落基地",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "11121": {
+  "id": 11121,
+  "memo": "피아의 둥지",
+  "name": "菲亚的巢穴",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "11901": {
+  "id": 11901,
+  "memo": "지하 참호 던전 A",
+  "name": "沉没的遗迹",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "11902": {
+  "id": 11902,
+  "memo": "지하 참호 던전 B",
+  "name": "波涛之下的废墟",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "21001": {
+  "id": 21001,
+  "memo": "봉인된 주술의 제단",
+  "name": "封印的咒术祭坛",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "21101": {
+  "id": 21101,
+  "memo": "표류하는 미궁",
+  "name": "漂流迷宫",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "21201": {
+  "id": 21201,
+  "memo": "와르그 광산",
+  "name": "와르그 광산",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "13001": {
+  "id": 13001,
+  "memo": "운무의 시련 ‘허공’",
+  "name": "云雾试炼「虚空」",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "13002": {
+  "id": 13002,
+  "memo": "운무의 시련 '외길'",
+  "name": "云雾试炼「孤径」",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "13003": {
+  "id": 13003,
+  "memo": "운무의 시련 '천견'",
+  "name": "云雾试炼「天见」",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "13004": {
+  "id": 13004,
+  "memo": "운무의 시련 ‘격발’",
+  "name": "云雾试炼「石火」",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "30003": {
+  "id": 30003,
+  "memo": "승급 퀘스트 던전 (지하 묘역)",
+  "name": "佣兵团晋升考核（高级）",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "100001": {
+  "id": 100001,
+  "memo": "가시돋친 푸르카스 토벌",
+  "name": "腐蚀饿鬼 弗尔卡斯",
+  "open_type": "QUEST_CLEAR",
+  "open_value": 10013
+ },
+ "100002": {
+  "id": 100002,
+  "memo": "선혈 갈고리 바나크 토벌",
+  "name": "猩红镰钩 巴纳克",
+  "open_type": "QUEST_CLEAR",
+  "open_value": 10015
+ },
+ "100006": {
+  "id": 100006,
+  "memo": "바르두크 토벌",
+  "name": "沉沦的贤者 巴尔杜克",
+  "open_type": "QUEST_CLEAR",
+  "open_value": 10040
+ },
+ "100003": {
+  "id": 100003,
+  "memo": "붕괴의 갈로르 토벌",
+  "name": "持续崩毁的加洛尔",
+  "open_type": "QUEST_CLEAR",
+  "open_value": 10049
+ },
+ "100004": {
+  "id": 100004,
+  "memo": "탐욕의 구울 토벌",
+  "name": "贪欲食尸鬼",
+  "open_type": "QUEST_CLEAR",
+  "open_value": 10069
+ },
+ "100005": {
+  "id": 100005,
+  "memo": "프레바르 웜 토벌",
+  "name": "枯竭大地 厄斯兰德",
+  "open_type": "QUEST_CLEAR",
+  "open_value": 10087
+ },
+ "200002": {
+  "id": 200002,
+  "memo": "가우론 레이드",
+  "name": "钢铁之心要塞守城战",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "200003": {
+  "id": 200003,
+  "memo": "우르슬라 레이드",
+  "name": "追踪到底",
+  "open_type": "QUEST_CLEAR",
+  "open_value": 10088
+ },
+ "400001": {
+  "id": 400001,
+  "memo": "특성 던전(진폭)",
+  "name": "震鸣之曼提镰螂",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "400002": {
+  "id": 400002,
+  "memo": "특성 던전(압쇄)",
+  "name": "重压之曼提镰螂",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "400003": {
+  "id": 400003,
+  "memo": "특성 던전(부유)",
+  "name": "骤风之曼提镰螂",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "400004": {
+  "id": 400004,
+  "memo": "특성 던전(충파)",
+  "name": "崩裂之德拉蛮甲",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "400005": {
+  "id": 400005,
+  "memo": "특성 던전(혈기)",
+  "name": "血涌之德拉蛮甲",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "400006": {
+  "id": 400006,
+  "memo": "특성 던전(홍염)",
+  "name": "炽焰之伽洛奇蠊",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "400007": {
+  "id": 400007,
+  "memo": "특성 던전(설빙)",
+  "name": "寒霜之伽洛奇蠊",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "400008": {
+  "id": 400008,
+  "memo": "특성 던전(뇌격)",
+  "name": "雷击之伽洛奇蠊",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "400009": {
+  "id": 400009,
+  "memo": "특성 던전(혼탁)",
+  "name": "瘴毒之伽洛奇蠊",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "500001": {
+  "id": 500001,
+  "memo": "용추종자 폐허",
+  "name": "龙之崇拜者废墟",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "500002": {
+  "id": 500002,
+  "memo": "끝없는 소환지",
+  "name": "无限的召唤地",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "500003": {
+  "id": 500003,
+  "memo": "거인의 흔적",
+  "name": "巨人的痕迹",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "500004": {
+  "id": 500004,
+  "memo": "잔류 웜 청소 구역",
+  "name": "残余龙虺清剿区",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "500005": {
+  "id": 500005,
+  "memo": "침식된 지하 묘지",
+  "name": "被侵蚀的地下墓地",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "600001": {
+  "id": 600001,
+  "memo": "샤노아 영웅 의뢰 던전",
+  "name": "被腐化的洞穴",
+  "open_type": "QUEST_STEP_HOLD",
+  "open_value": 20308
+ },
+ "600011": {
+  "id": 600011,
+  "memo": "오네트 영웅 의뢰 던전",
+  "name": "钢铁之心要塞军械库",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "600021": {
+  "id": 600021,
+  "memo": "세리스 영웅 의뢰 던전",
+  "name": "克雷希拉之塔",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "600031": {
+  "id": 600031,
+  "memo": "테레지아 영웅 의뢰_실내",
+  "name": "古老的城堡遗迹",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "600032": {
+  "id": 600032,
+  "memo": "테레지아 영웅 의뢰_심연_01",
+  "name": "无尽的虚空",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "600033": {
+  "id": 600033,
+  "memo": "테레지아 영웅 의뢰 심연_02",
+  "name": "黎明的地平线",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "600041": {
+  "id": 600041,
+  "memo": "정령의 쉼터_칼리엔 영웅의뢰",
+  "name": "精灵的庇护所",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "600051": {
+  "id": 600051,
+  "memo": "다나 영웅 의뢰 던전",
+  "name": "裂隙",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ },
+ "970000": {
+  "id": 970000,
+  "memo": "테스트 맵 그룹",
+  "name": "古龙之坛",
+  "open_type": "TYPE_NONE",
+  "open_value": 0
+ }
+}
