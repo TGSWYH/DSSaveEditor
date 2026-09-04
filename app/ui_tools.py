@@ -16,7 +16,7 @@ from PySide6.QtWidgets import (
 
 from . import i18n
 from .datasource import cast_value, INVALID
-from .ui_common import make_card, _CARD_QSS
+from .ui_common import make_card
 
 
 # 允许新增行的无主键表 (主键表默认允许)

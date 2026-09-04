@@ -52,7 +52,19 @@ QLabel#titleLabel {{
     color: #7aa2f7;
 }}
 QLabel#hintLabel {{
-    color: #7f849c;
+    color: #a6adc8;
+}}
+QFrame#card {{
+    background-color: #242436;
+    border: 1px solid #45475a;
+    border-radius: 8px;
+}}
+QLabel#cardTitle {{
+    background-color: transparent;
+    border: none;
+    color: #89b4fa;
+    font-size: 11pt;
+    font-weight: 600;
 }}
 QTabWidget::pane {{
     border: 1px solid #313244;
@@ -172,7 +184,7 @@ QCheckBox::indicator:checked {{
     border-color: #7aa2f7;
 }}
 QCheckBox:disabled {{
-    color: #585b70;
+    color: #9399b2;
 }}
 QMessageBox {{
     background-color: #1e1e2e;
@@ -314,6 +326,9 @@ QScrollArea {{
     background-color: #1e1e2e;
     border: none;
 }}
+QScrollArea > QWidget > QWidget {{
+    background-color: #1e1e2e;
+}}
 QGroupBox {{
     border: 1px solid #313244;
     border-radius: 6px;
@@ -372,6 +387,18 @@ QLabel#titleLabel {{
     font-size: 11pt; font-weight: 600; color: #3a5bbf;
 }}
 QLabel#hintLabel {{ color: #6b6f80; }}
+QFrame#card {{
+    background-color: #ffffff;
+    border: 1px solid #cdd0e0;
+    border-radius: 8px;
+}}
+QLabel#cardTitle {{
+    background-color: transparent;
+    border: none;
+    color: #3a5bbf;
+    font-size: 11pt;
+    font-weight: 600;
+}}
 QTabWidget::pane {{
     border: 1px solid #cdd0e0;
     border-radius: 6px;

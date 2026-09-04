@@ -9,4 +9,4 @@ import app.main
 
 
 if __name__ == "__main__":
-    sys.exit(app.main.main())
+    sys.exit(app.main.main(smoke="--smoke" in sys.argv))

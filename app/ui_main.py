@@ -48,6 +48,7 @@ from .ui_inventory import InventoryPage
 from .ui_karma import KarmaPage
 from .ui_vehicle import VehiclePage
 from .ui_rune import RunePage
+from .ui_achievement import AchievementPage
 from .ui_tools import DataToolsPage
 from .ui_repair import RepairPage
 from .ui_backup import BackupDialog, SaveDiffDialog
@@ -149,6 +150,7 @@ class MainWindow(QMainWindow):
             "rune": RunePage(self.data, self.names, self),
             "equipment": EquipmentPage(self.data, self.names, self),
             "inventory": InventoryPage(self.data, self.names, self),
+            "achievement": AchievementPage(self.data, self.names, self),
             # 任务系统 7 页
             "quest_main": QuestPage(self.data, self.names, self, self.quest_mgr, "main"),
             "quest_epic": QuestPage(self.data, self.names, self, self.quest_mgr, "epic"),
@@ -169,6 +171,7 @@ class MainWindow(QMainWindow):
             ("🔮 " + str(i18n.tr("quest.nav_rune")), "rune"),
             ("⚔ " + str(i18n.tr("nav.equipment")), "equipment"),
             ("🎒 " + str(i18n.tr("nav.inventory")), "inventory"),
+            ("🏆 " + str(i18n.tr("nav.achievement")), "achievement"),
             ("──────────", None),  # 分隔: 任务区
             ("📜 " + str(i18n.tr("quest.nav_main")), "quest_main"),
             ("🔗 " + str(i18n.tr("quest.nav_epic")), "quest_epic"),
@@ -191,7 +194,7 @@ class MainWindow(QMainWindow):
             it.setData(Qt.ItemDataRole.UserRole, key)
             self.nav.addItem(it)
 
-        for key in ["overview", "character", "karma", "vehicle", "rune", "equipment", "inventory",
+        for key in ["overview", "character", "karma", "vehicle", "rune", "equipment", "inventory", "achievement",
                     "quest_main", "quest_epic", "quest_character", "quest_region",
                     "quest_grade", "quest_other", "quest_unreleased", "tools", "repair"]:
             self.stack.addWidget(self.pages[key])
@@ -345,7 +348,7 @@ class MainWindow(QMainWindow):
     # ---------- 刷新页面 ----------
     def refresh_all_pages(self):
         """刷新总览/角色/宿命烙印/使魔/符文/装备/背包/数据工具/任务各页数据。"""
-        for key in ("overview", "character", "karma", "vehicle", "rune", "equipment", "inventory", "tools",
+        for key in ("overview", "character", "karma", "vehicle", "rune", "equipment", "inventory", "achievement", "tools",
                     "repair",
                     "quest_main", "quest_epic", "quest_character", "quest_region",
                     "quest_grade", "quest_other", "quest_unreleased"):

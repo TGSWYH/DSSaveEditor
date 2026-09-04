@@ -2,10 +2,10 @@
   "app_title": "DragonSword: Awakening Save Editor",
   "app_subtitle": "DragonSword: Awakening Save Editor",
   "disclaimer": {
-    "title": "DragonSword: Awakening Save Editor",
-    "disclaimer": "This software is intended solely for learning, research, and exchange regarding save file formats and game mechanics. It is not affiliated with the game's official team.\nDo not use it for commercial purposes or any illegal activities. Any consequences arising from its use are the sole responsibility of the user.",
-    "free": "This software is permanently free.\nIf you obtained it through a paid channel, demand a full refund from the seller immediately and report them to the author.",
-    "understand": "I Understand and Agree"
+    "title": "DSSaveEditor - TGSWYH Edition",
+    "disclaimer": "This editor is modified from noobdawn's open-source DSSaveEditor project.\nOriginal project: https://github.com/noobdawn/DSSaveEditor",
+    "free": "This edition adds achievement counter editing, character-based equipped gear stat editing, dark theme fixes, temporary-file cleanup, and standalone EXE packaging.\nModified by: TGSWYH",
+    "understand": "Open Editor"
   },
   "menu": {
     "open": "Open Save",
@@ -107,7 +107,21 @@
     "equipment": "Equipment",
     "tools": "Data Tools",
     "inventory": "Inventory",
-    "repair": "Repair"
+    "repair": "Repair",
+    "achievement": "Achievements"
+  },
+  "achievement_page": {
+    "title": "Achievement Counters",
+    "hint": "Changes remain in memory until you click Save in the toolbar.",
+    "name": "Name",
+    "group_id": "Group ID",
+    "step": "Step",
+    "count": "Current count",
+    "new_step": "New step:",
+    "new_count": "New count:",
+    "apply": "Apply to selected",
+    "group_fallback": "Achievement group {group_id}",
+    "updated": "Achievement group {group_id} updated: step {step}, count {count}"
   },
   "quest": {
     "nav_main": "Main Quests",
@@ -249,6 +263,9 @@
     "select_invert": "Invert Selection"
   },
   "equipment_page": {
+    "character_filter": "Character:",
+    "all_equipment": "All Equipment",
+    "no_mounted_equipment": "This character has no equipment equipped",
     "search": "Search equipment",
     "detail": "Equipment Detail",
     "no_selection": "Select an equipment on the left",

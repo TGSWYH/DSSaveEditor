@@ -14,26 +14,16 @@ from PySide6.QtWidgets import (
 from . import i18n
 
 
-# 卡片样式 (深浅主题通用, 用 objectName=card 在 ui_theme 里也可覆盖)
-_CARD_QSS = (
-    "QFrame#card { background-color: rgba(255,255,255,0.04);"
-    "  border: 1px solid rgba(122,162,247,0.25); border-radius: 10px; }"
-    "QFrame#cardTitle { background: transparent; border: none; }"
-)
-
-
 def make_card(title_text):
     """创建卡片容器 QFrame (objectName=card), 返回 (frame, layout)。"""
     frame = QFrame()
     frame.setObjectName("card")
-    frame.setStyleSheet(_CARD_QSS)
     lay = QVBoxLayout(frame)
     lay.setContentsMargins(16, 12, 16, 14)
     lay.setSpacing(8)
     if title_text:
         title = QLabel(str(title_text))
         title.setObjectName("cardTitle")
-        title.setStyleSheet("font-size: 11pt; font-weight: 600; color: #7aa2f7;")
         lay.addWidget(title)
     return frame, lay
 

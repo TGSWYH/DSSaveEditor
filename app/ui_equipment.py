@@ -23,6 +23,13 @@ from .ui_common import make_card
 
 # 开放符文槽所需的精工工具 ITEM_CID (StringData: "使用它开放符文槽")
 GEM_TOOL_CID = 1450408
+MOUNT_SLOTS = (
+    ("ACC_HEAD", "equipment_page.part_head"),
+    ("ACC_CHEST", "equipment_page.part_top"),
+    ("ACC_LEG", "equipment_page.part_bottom"),
+    ("ACC_HAND", "equipment_page.part_glove"),
+    ("ACC_FOOT", "equipment_page.part_shoe"),
+)
 
 
 # ============================================================
@@ -51,6 +58,7 @@ class EquipmentPage(QWidget):
         self._sub_all = []        # [(id, display)]
         self._build_stat_cache()
         self._current_dbid = None
+        self._mounted_slots = {}
         self._skip_delete_confirm = False  # 本次运行不再提示删除确认
         self._build()
 
@@ -223,6 +231,12 @@ class EquipmentPage(QWidget):
         self.search_box.setPlaceholderText(str(i18n.tr("equipment_page.search")))
         self.search_box.textChanged.connect(self._on_search)
         left_lay.addWidget(self.search_box)
+        self.character_combo = QComboBox()
+        self.character_combo.currentIndexChanged.connect(self._on_character_changed)
+        character_row = QHBoxLayout()
+        character_row.addWidget(QLabel(str(i18n.tr("equipment_page.character_filter"))))
+        character_row.addWidget(self.character_combo, 1)
+        left_lay.addLayout(character_row)
         self.equip_list = QListWidget()
         self.equip_list.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
         self.equip_list.currentRowChanged.connect(self._on_select)
@@ -266,6 +280,8 @@ class EquipmentPage(QWidget):
     def reload(self):
         self.equip_list.clear()
         self.search_box.clear()
+        self.character_combo.blockSignals(True)
+        self.character_combo.clear()
         if not self.data.db_path:
             self._clear_layout(self.detail_lay)
             empty = QLabel(str(i18n.tr("equipment_page.no_equipment")))
@@ -273,6 +289,7 @@ class EquipmentPage(QWidget):
             empty.setAlignment(Qt.AlignmentFlag.AlignCenter)
             self.detail_lay.addWidget(empty)
             self.detail_lay.addStretch(1)
+            self.character_combo.blockSignals(False)
             return
         try:
             # DELETED_DATE=0 表示未删除
@@ -282,8 +299,11 @@ class EquipmentPage(QWidget):
         # 按 ITEM_CID 排序
         rows = sorted(rows, key=lambda r: r["ITEM_CID"])
         self._all_rows = rows
-        self._populate_list(rows)
-        if rows:
+        self._load_character_filter()
+        self.character_combo.blockSignals(False)
+        visible = self._filtered_rows()
+        self._populate_list(visible)
+        if visible:
             self.equip_list.setCurrentRow(0)
         else:
             self._clear_layout(self.detail_lay)
@@ -301,7 +321,9 @@ class EquipmentPage(QWidget):
             cid = r["ITEM_CID"]
             ench = r["ENCHANT_LEVEL"] or 0
             name = self.names.resolve("ITEM_CID", cid) or f"#{cid}"
-            text = f"{name} +{ench}"
+            slot = self._mounted_slots.get(dbid)
+            prefix = f"[{slot}] " if slot else ""
+            text = f"{prefix}{name} +{ench}"
             item = QListWidgetItem(text)
             item.setData(Qt.ItemDataRole.UserRole, dbid)
             self.equip_list.addItem(item)
@@ -309,16 +331,62 @@ class EquipmentPage(QWidget):
     def _on_search(self, text):
         """按名称/ID 过滤列表。"""
         text = text.strip().lower()
+        source = self._filtered_rows()
         if not text:
-            self._populate_list(self._all_rows)
+            self._populate_list(source)
             return
         filtered = []
-        for r in self._all_rows:
+        for r in source:
             cid = r["ITEM_CID"]
             name = self.names.resolve("ITEM_CID", cid) or ""
             if text in str(name).lower() or text in str(cid):
                 filtered.append(r)
         self._populate_list(filtered)
+
+    def _load_character_filter(self):
+        """Build character choices and ITEM_DBID -> equipped part mapping."""
+        self.character_combo.addItem(str(i18n.tr("equipment_page.all_equipment")), None)
+        try:
+            characters = self.data.select_all(
+                "tb_character", "USER_DBID=?", (USER_DBID,))
+        except Exception:
+            characters = []
+        for row in sorted(characters, key=lambda value: value["CHARACTER_CID"]):
+            cid = row["CHARACTER_CID"]
+            name = self.names.resolve("CHARACTER_CID", cid) or f"#{cid}"
+            self.character_combo.addItem(str(name), cid)
+
+    def _filtered_rows(self):
+        cid = self.character_combo.currentData()
+        self._mounted_slots = {}
+        if cid is None:
+            return list(self._all_rows)
+        try:
+            mount = self.data.fetchone(
+                "SELECT * FROM tb_equip_mount WHERE USER_DBID=? AND CHARACTER_CID=?",
+                (USER_DBID, cid))
+        except Exception:
+            mount = None
+        if mount is None:
+            return []
+        for column, name_key in MOUNT_SLOTS:
+            dbid = mount[column]
+            if dbid:
+                self._mounted_slots[dbid] = str(i18n.tr(name_key))
+        return [row for row in self._all_rows if row["ITEM_DBID"] in self._mounted_slots]
+
+    def _on_character_changed(self, _index):
+        self._current_dbid = None
+        self._clear_layout(self.detail_lay)
+        self._on_search(self.search_box.text())
+        if self.equip_list.count():
+            self.equip_list.setCurrentRow(0)
+        else:
+            empty = QLabel(str(i18n.tr("equipment_page.no_mounted_equipment")))
+            empty.setStyleSheet("color: #7f849c; font-size: 11pt;")
+            empty.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            self.detail_lay.addWidget(empty)
+            self.detail_lay.addStretch(1)
 
     def _on_select(self, row_idx):
         if row_idx < 0:

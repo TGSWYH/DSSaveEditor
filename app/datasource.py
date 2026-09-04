@@ -7,6 +7,7 @@ SaveData 从旧 ds_editor.py 迁移而来, 方法签名保持一致:
 
 NameResolver 复用旧版 _resolve_name / _format_cell 逻辑, 仅用于显示层。
 """
+import atexit
 import os
 import json
 import sqlite3
@@ -54,6 +55,7 @@ class SaveData:
         self.table_count = 0
         self._tmpfile = None
         self._baseline = None        # 打开时的表快照 (供 build_diff 对比)
+        atexit.register(self.close)
 
     # ---------- 加载 / 保存 ----------
     def load(self, db_path):
@@ -61,15 +63,16 @@ class SaveData:
         plain = ds_save.load_plain_db(db_path)
         if self.conn:
             self.close()
-        self._import_plain(plain)
+        self._import_plain(plain, os.path.dirname(os.path.abspath(db_path)))
         self.db_path = db_path
         self.table_count = self._table_count()
         self._rebuild_baseline()
 
-    def _import_plain(self, plain_bytes):
+    def _import_plain(self, plain_bytes, temp_dir):
         """把明文 SQLite 字节导入临时文件数据库"""
         import tempfile
-        fd, tmpfile = tempfile.mkstemp(suffix=".db")
+        fd, tmpfile = tempfile.mkstemp(
+            prefix=".dssaveeditor_", suffix=".sqlite", dir=temp_dir)
         try:
             os.write(fd, plain_bytes)
             os.close(fd)
