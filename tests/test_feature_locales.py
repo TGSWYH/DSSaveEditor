@@ -13,10 +13,16 @@ from app.ui_achievement import AchievementPage
 class FakeSaveData:
     db_path = "memory"
 
+    def __init__(self):
+        self.row = {"USER_DBID": 1000, "GROUP_ID": 100017, "STEP": 0, "CNT": 164}
+
     def select_all(self, table, where="", params=()):
         if table == "tb_achievement_count":
-            return [{"USER_DBID": 1000, "GROUP_ID": 100017, "STEP": 0, "CNT": 164}]
+            return [dict(self.row)]
         return []
+
+    def execute(self, sql, params=()):
+        self.row["STEP"], self.row["CNT"] = params[:2]
 
 
 class FeatureLocaleTests(unittest.TestCase):
@@ -54,6 +60,31 @@ class FeatureLocaleTests(unittest.TestCase):
                     i18n.tr("equipment_page.character_filter"),
                     "equipment_page.character_filter",
                 )
+
+    def test_applying_a_change_keeps_table_geometry_and_selection(self):
+        i18n.set_language("zh_CN")
+        data = FakeSaveData()
+        page = AchievementPage(
+            data, None, SimpleNamespace(set_status=lambda _text: None))
+        page.resize(1200, 720)
+        page.show()
+        self.app.processEvents()
+        page.reload()
+        page.table.selectRow(0)
+        self.app.processEvents()
+        widths_before = [page.table.columnWidth(i) for i in range(5)]
+
+        page.step_spin.setValue(1)
+        page.count_spin.setValue(999)
+        page._apply_selected()
+        self.app.processEvents()
+
+        self.assertEqual(page.table.currentRow(), 0)
+        self.assertEqual(page.table.item(0, 2).text(), "1")
+        self.assertEqual(page.table.item(0, 3).text(), "999")
+        self.assertEqual(
+            [page.table.columnWidth(i) for i in range(5)], widths_before)
+        self.assertGreater(sum(widths_before), page.table.viewport().width() - 8)
 
 
 if __name__ == "__main__":

@@ -7,7 +7,7 @@ import os
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
     QAbstractItemView, QHBoxLayout, QLabel, QMessageBox, QPushButton,
-    QSpinBox, QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget,
+    QHeaderView, QSpinBox, QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget,
 )
 
 from . import i18n
@@ -61,7 +61,11 @@ class AchievementPage(QWidget):
         self.table.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
         self.table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.table.verticalHeader().setVisible(False)
-        self.table.horizontalHeader().setStretchLastSection(True)
+        header = self.table.horizontalHeader()
+        header.setStretchLastSection(False)
+        header.setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
+        for column in range(1, 5):
+            header.setSectionResizeMode(column, QHeaderView.ResizeMode.ResizeToContents)
         self.table.itemSelectionChanged.connect(self._on_selection_changed)
         layout.addWidget(self.table, 1)
 
@@ -127,8 +131,6 @@ class AchievementPage(QWidget):
                 if column == 0:
                     item.setData(Qt.ItemDataRole.UserRole, group_id)
                 self.table.setItem(row_index, column, item)
-        self.table.resizeColumnsToContents()
-
     def _selected_group_id(self):
         row = self.table.currentRow()
         if row < 0:
@@ -152,11 +154,17 @@ class AchievementPage(QWidget):
             return
         step = self.step_spin.value()
         value = self.count_spin.value()
-        self.data.execute(
-            "UPDATE tb_achievement_count SET STEP=?, CNT=? "
-            "WHERE USER_DBID=? AND GROUP_ID=?",
-            (step, value, USER_DBID, group_id),
-        )
-        self.reload()
+        try:
+            self.data.execute(
+                "UPDATE tb_achievement_count SET STEP=?, CNT=? "
+                "WHERE USER_DBID=? AND GROUP_ID=?",
+                (step, value, USER_DBID, group_id),
+            )
+        except Exception as ex:
+            QMessageBox.critical(self, str(i18n.tr("status.error")), str(ex))
+            return
+        row = self.table.currentRow()
+        self.table.item(row, 2).setText(str(step))
+        self.table.item(row, 3).setText(str(value))
         self.main_window.set_status(str(i18n.tr(
             "achievement_page.updated", group_id=group_id, step=step, count=value)))
