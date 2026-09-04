@@ -26,7 +26,20 @@ def _load_file(lang):
     try:
         with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
-        return data if isinstance(data, dict) else {}
+        if not isinstance(data, dict):
+            return {}
+        feature_path = os.path.join(_LOCALES_DIR, "features.json")
+        try:
+            with open(feature_path, "r", encoding="utf-8") as f:
+                feature_data = json.load(f).get(lang, {})
+            for key, value in feature_data.items():
+                if isinstance(value, dict) and isinstance(data.get(key), dict):
+                    data[key] = {**data[key], **value}
+                else:
+                    data[key] = value
+        except (OSError, ValueError, AttributeError):
+            pass
+        return data
     except Exception:
         return {}
 

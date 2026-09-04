@@ -49,12 +49,13 @@ class AchievementPage(QWidget):
         hint.setStyleSheet("color: #7f849c;")
         layout.addWidget(hint)
 
-        self.table = QTableWidget(0, 4)
+        self.table = QTableWidget(0, 5)
         self.table.setHorizontalHeaderLabels([
             str(i18n.tr("achievement_page.name")),
             str(i18n.tr("achievement_page.group_id")),
             str(i18n.tr("achievement_page.step")),
             str(i18n.tr("achievement_page.count")),
+            str(i18n.tr("achievement_page.target")),
         ])
         self.table.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
         self.table.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
@@ -87,9 +88,14 @@ class AchievementPage(QWidget):
         layout.addLayout(controls)
 
     def _group_name(self, group_id):
-        name = localize_name(self.names.get(str(group_id)))
+        meta = self.names.get(str(group_id), {})
+        name = localize_name(meta.get("name", meta))
         return name or str(i18n.tr(
             "achievement_page.group_fallback", group_id=group_id))
+
+    def _group_target(self, group_id):
+        meta = self.names.get(str(group_id), {})
+        return meta.get("target", "") if isinstance(meta, dict) else ""
 
     def reload(self):
         self.table.setRowCount(0)
@@ -112,10 +118,11 @@ class AchievementPage(QWidget):
             group_id = row["GROUP_ID"]
             values = (
                 self._group_name(group_id), group_id, row["STEP"], row["CNT"],
+                self._group_target(group_id),
             )
             for column, value in enumerate(values):
                 item = QTableWidgetItem(str(value))
-                if column in (1, 2, 3):
+                if column in (1, 2, 3, 4):
                     item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
                 if column == 0:
                     item.setData(Qt.ItemDataRole.UserRole, group_id)

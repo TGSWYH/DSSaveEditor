@@ -4,7 +4,7 @@
   "disclaimer": {
     "title": "DSSaveEditor - TGSWYH 修改版",
     "disclaimer": "本修改器基于 noobdawn 的开源项目 DSSaveEditor 修改。\n原项目：https://github.com/noobdawn/DSSaveEditor",
-    "free": "本版本完善了成就计数编辑、按角色筛选并修改已穿戴装备词条、深色主题显示、临时文件清理和独立 EXE 打包。\n修改作者：TGSWYH",
+    "free": "本版本新增成就界面、按角色查看和修改已穿戴装备，并完善相关数据名称与目标显示。\n修改作者：TGSWYH",
     "understand": "进入修改器"
   },
   "menu": {
@@ -117,6 +117,7 @@
     "group_id": "组 ID",
     "step": "阶段",
     "count": "当前计数",
+    "target": "目标",
     "new_step": "新阶段：",
     "new_count": "新计数：",
     "apply": "应用到选中项",

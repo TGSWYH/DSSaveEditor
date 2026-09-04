@@ -4,7 +4,7 @@
   "disclaimer": {
     "title": "DSSaveEditor - TGSWYH Edition",
     "disclaimer": "This editor is modified from noobdawn's open-source DSSaveEditor project.\nOriginal project: https://github.com/noobdawn/DSSaveEditor",
-    "free": "This edition adds achievement counter editing, character-based equipped gear stat editing, dark theme fixes, temporary-file cleanup, and standalone EXE packaging.\nModified by: TGSWYH",
+    "free": "This edition adds an Achievements page, character-based viewing and editing of equipped gear, and improved data names and target display.\nModified by: TGSWYH",
     "understand": "Open Editor"
   },
   "menu": {
@@ -117,6 +117,7 @@
     "group_id": "Group ID",
     "step": "Step",
     "count": "Current count",
+    "target": "Target",
     "new_step": "New step:",
     "new_count": "New count:",
     "apply": "Apply to selected",

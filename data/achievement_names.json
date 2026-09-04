@@ -1,7 +1,38 @@
 {
-  "100012": {"zh_CN": "进禁坚果，依法没收！"},
-  "100013": {"zh_CN": "狐狸运巴，终究藏不住"},
-  "100014": {"zh_CN": "是你先撞上来的吧？"},
-  "100015": {"zh_CN": "明明可以直接路过的……"},
-  "100016": {"zh_CN": "我问你拿着铁锅想炖什么？！"}
+  "100012": {
+    "target": 500,
+    "name": {"zh_CN": "进禁坚果，依法没收！", "zh_TW": "進禁堅果，依法沒收！", "en": "Prohibited Nuts, Confiscated by Law!", "ja": "禁止ナッツ、法に基づき没収！", "ko_KR": "금지 견과류, 법에 따라 압수!", "de": "Verbotene Nüsse, gesetzmäßig beschlagnahmt!", "fr": "Noix interdites, saisies conformément à la loi !", "es_ES": "¡Frutos secos prohibidos, confiscados por ley!", "pt_BR": "Nozes proibidas, confiscadas por lei!", "ru": "Запрещённые орехи конфискованы по закону!", "th": "ถั่วต้องห้าม ยึดตามกฎหมาย!"}
+  },
+  "100013": {
+    "target": 500,
+    "name": {"zh_CN": "狐狸运巴，终究藏不住", "zh_TW": "狐狸尾巴，終究藏不住", "en": "A Fox's Tail Can Never Stay Hidden", "ja": "狐の尻尾は、いつか隠せなくなる", "ko_KR": "여우 꼬리는 결국 숨길 수 없다", "de": "Ein Fuchsschwanz bleibt nie verborgen", "fr": "La queue du renard finit toujours par se dévoiler", "es_ES": "La cola del zorro nunca permanece oculta", "pt_BR": "A cauda da raposa nunca fica escondida", "ru": "Лисий хвост всё равно не спрячешь", "th": "หางจิ้งจอก สุดท้ายก็ซ่อนไม่มิด"}
+  },
+  "100014": {
+    "target": 500,
+    "name": {"zh_CN": "是你先撞上来的吧？", "zh_TW": "是你先撞上來的吧？", "en": "You Ran Into Me First, Right?", "ja": "先にぶつかってきたのはそっちだよね？", "ko_KR": "먼저 들이받은 건 너지?", "de": "Du bist doch zuerst in mich gerannt, oder?", "fr": "C'est toi qui m'as foncé dessus en premier, non ?", "es_ES": "Tú chocaste conmigo primero, ¿verdad?", "pt_BR": "Foi você que bateu em mim primeiro, não foi?", "ru": "Это ведь ты первым в меня врезался?", "th": "นายพุ่งชนฉันก่อนใช่ไหม?"}
+  },
+  "100015": {
+    "target": 500,
+    "name": {"zh_CN": "明明可以直接路过的……", "zh_TW": "明明可以直接路過的……", "en": "You Could Have Just Walked Past...", "ja": "そのまま通り過ぎればよかったのに……", "ko_KR": "그냥 지나가도 됐잖아……", "de": "Du hättest einfach vorbeigehen können ...", "fr": "Tu pouvais simplement passer ton chemin…", "es_ES": "Podrías haber pasado de largo...", "pt_BR": "Você poderia simplesmente ter passado...", "ru": "Можно же было просто пройти мимо…", "th": "ทั้งที่เดินผ่านไปเฉย ๆ ก็ได้แท้ ๆ……"}
+  },
+  "100016": {
+    "target": 500,
+    "name": {"zh_CN": "我问你拿着铁锅想炖什么？！", "zh_TW": "我問你拿著鐵鍋想燉什麼？！", "en": "What Are You Planning to Stew in That Pot?!", "ja": "その鉄鍋で何を煮込むつもり？！", "ko_KR": "그 무쇠솥으로 뭘 끓이려는 거야?!", "de": "Was willst du in diesem Eisentopf schmoren?!", "fr": "Qu'est-ce que tu comptes mijoter dans cette marmite ?!", "es_ES": "¡¿Qué piensas guisar en esa olla?!", "pt_BR": "O que você pretende cozinhar nessa panela?!", "ru": "Что ты собрался тушить в этом котле?!", "th": "ถือหม้อเหล็กนั่นจะเอาไปตุ๋นอะไร?!"}
+  },
+  "100017": {
+    "target": 1000,
+    "name": {"zh_CN": "今日菜谱：完全制霸！", "zh_TW": "今日菜譜：完全制霸！", "en": "Today's Menu: Total Domination!", "ja": "本日のレシピ：完全制覇！", "ko_KR": "오늘의 레시피: 완전 정복!", "de": "Heutiges Rezept: vollständig gemeistert!", "fr": "Menu du jour : maîtrise totale !", "es_ES": "Menú de hoy: ¡dominio total!", "pt_BR": "Cardápio de hoje: domínio total!", "ru": "Меню дня: полное господство!", "th": "เมนูวันนี้: พิชิตครบถ้วน!"}
+  },
+  "100018": {
+    "target": 1000,
+    "name": {"zh_CN": "矿镐只是辅助！", "zh_TW": "礦鎬只是輔助！", "en": "The Pickaxe Is Just a Tool!", "ja": "つるはしは補助にすぎない！", "ko_KR": "곡괭이는 보조일 뿐!", "de": "Die Spitzhacke ist nur ein Hilfsmittel!", "fr": "La pioche n'est qu'un outil !", "es_ES": "¡El pico es solo una herramienta!", "pt_BR": "A picareta é só uma ferramenta!", "ru": "Кирка лишь вспомогательный инструмент!", "th": "พลั่วขุดแร่เป็นแค่ตัวช่วย!"}
+  },
+  "100019": {
+    "target": 1000,
+    "name": {"zh_CN": "看见的植物，先薅了再说！", "zh_TW": "看見的植物，先薅了再說！", "en": "See a Plant? Gather It First!", "ja": "植物を見つけたら、まず採取！", "ko_KR": "식물이 보이면 일단 채집부터!", "de": "Pflanze gesehen? Erst einmal sammeln!", "fr": "Une plante en vue ? On la cueille d'abord !", "es_ES": "¿Ves una planta? ¡Recógela primero!", "pt_BR": "Viu uma planta? Colete primeiro!", "ru": "Увидел растение — сначала собери!", "th": "เห็นพืชเมื่อไร เก็บก่อนค่อยว่ากัน!"}
+  },
+  "100020": {
+    "target": 1000,
+    "name": {"zh_CN": "老板，老样子，开炉！", "zh_TW": "老闆，老樣子，開爐！", "en": "Boss, the Usual. Fire Up the Forge!", "ja": "親方、いつもの！炉に火を入れて！", "ko_KR": "사장님, 늘 하던 대로 화로 가동!", "de": "Meister, wie immer. Werft den Ofen an!", "fr": "Patron, comme d'habitude. Allumez la forge !", "es_ES": "Jefe, lo de siempre. ¡Enciende la forja!", "pt_BR": "Chefe, o de sempre. Acenda a forja!", "ru": "Хозяин, как обычно. Разжигай горн!", "th": "เถ้าแก่ เหมือนเดิม เปิดเตาหลอม!"}
+  }
 }

@@ -1,0 +1,68 @@
+{
+  "zh_CN": {
+    "disclaimer": {"title": "DSSaveEditor - TGSWYH 修改版", "disclaimer": "本修改器基于 noobdawn 的开源项目 DSSaveEditor 修改。\n原项目：https://github.com/noobdawn/DSSaveEditor", "free": "本版本新增成就界面、按角色查看和修改已穿戴装备，并完善相关数据名称与目标显示。\n修改作者：TGSWYH", "understand": "进入修改器"},
+    "nav": {"achievement": "成就"},
+    "achievement_page": {"title": "成就", "hint": "修改只会暂存在内存中。确认无误后，点击工具栏的“保存修改”写回存档。", "name": "名称", "group_id": "组 ID", "step": "阶段", "count": "当前计数", "target": "目标", "new_step": "新阶段：", "new_count": "新计数：", "apply": "应用到选中项", "group_fallback": "成就组 {group_id}", "updated": "成就组 {group_id} 已更新：阶段 {step}，计数 {count}"},
+    "equipment_page": {"character_filter": "角色：", "all_equipment": "全部装备", "no_mounted_equipment": "该角色当前没有穿戴装备"}
+  },
+  "zh_TW": {
+    "disclaimer": {"title": "DSSaveEditor - TGSWYH 修改版", "disclaimer": "本修改器基於 noobdawn 的開源專案 DSSaveEditor 修改。\n原專案：https://github.com/noobdawn/DSSaveEditor", "free": "本版本新增成就介面、依角色檢視和修改已穿戴裝備，並完善相關資料名稱與目標顯示。\n修改作者：TGSWYH", "understand": "進入修改器"},
+    "nav": {"achievement": "成就"},
+    "achievement_page": {"title": "成就", "hint": "修改只會暫存在記憶體中。確認無誤後，點擊工具列的「儲存修改」寫回存檔。", "name": "名稱", "group_id": "群組 ID", "step": "階段", "count": "目前計數", "target": "目標", "new_step": "新階段：", "new_count": "新計數：", "apply": "套用至所選項目", "group_fallback": "成就群組 {group_id}", "updated": "成就群組 {group_id} 已更新：階段 {step}，計數 {count}"},
+    "equipment_page": {"character_filter": "角色：", "all_equipment": "全部裝備", "no_mounted_equipment": "此角色目前沒有穿戴裝備"}
+  },
+  "en": {
+    "disclaimer": {"title": "DSSaveEditor - TGSWYH Edition", "disclaimer": "This editor is modified from noobdawn's open-source DSSaveEditor project.\nOriginal project: https://github.com/noobdawn/DSSaveEditor", "free": "This edition adds an Achievements page, character-based viewing and editing of equipped gear, and improved data names and target display.\nModified by: TGSWYH", "understand": "Open Editor"},
+    "nav": {"achievement": "Achievements"},
+    "achievement_page": {"title": "Achievements", "hint": "Changes remain in memory until you click Save in the toolbar.", "name": "Name", "group_id": "Group ID", "step": "Step", "count": "Current Count", "target": "Target", "new_step": "New step:", "new_count": "New count:", "apply": "Apply to Selected", "group_fallback": "Achievement Group {group_id}", "updated": "Achievement group {group_id} updated: step {step}, count {count}"},
+    "equipment_page": {"character_filter": "Character:", "all_equipment": "All Equipment", "no_mounted_equipment": "This character has no equipment equipped"}
+  },
+  "ja": {
+    "disclaimer": {"title": "DSSaveEditor - TGSWYH 改訂版", "disclaimer": "このエディターは noobdawn のオープンソースプロジェクト DSSaveEditor を基に改訂されています。\n元プロジェクト：https://github.com/noobdawn/DSSaveEditor", "free": "本バージョンでは実績画面、キャラクター別の装備表示・編集、関連データ名と目標表示を追加・改善しました。\n改訂者：TGSWYH", "understand": "エディターを開く"},
+    "nav": {"achievement": "実績"},
+    "achievement_page": {"title": "実績", "hint": "変更はメモリ上に一時保存されます。確認後、ツールバーの「変更を保存」でセーブに書き込んでください。", "name": "名前", "group_id": "グループ ID", "step": "段階", "count": "現在値", "target": "目標", "new_step": "新しい段階：", "new_count": "新しい値：", "apply": "選択項目に適用", "group_fallback": "実績グループ {group_id}", "updated": "実績グループ {group_id} を更新：段階 {step}、値 {count}"},
+    "equipment_page": {"character_filter": "キャラクター：", "all_equipment": "すべての装備", "no_mounted_equipment": "このキャラクターは装備を着用していません"}
+  },
+  "ko_KR": {
+    "disclaimer": {"title": "DSSaveEditor - TGSWYH 수정판", "disclaimer": "이 에디터는 noobdawn의 오픈 소스 프로젝트 DSSaveEditor를 기반으로 수정되었습니다.\n원본 프로젝트: https://github.com/noobdawn/DSSaveEditor", "free": "이 버전은 업적 화면과 캐릭터별 착용 장비 조회·수정 기능을 추가하고 관련 데이터 이름과 목표 표시를 개선했습니다.\n수정자: TGSWYH", "understand": "에디터 열기"},
+    "nav": {"achievement": "업적"},
+    "achievement_page": {"title": "업적", "hint": "변경 사항은 메모리에 임시 저장됩니다. 확인 후 도구 모음의 '변경 저장'을 눌러 세이브에 기록하세요.", "name": "이름", "group_id": "그룹 ID", "step": "단계", "count": "현재 횟수", "target": "목표", "new_step": "새 단계:", "new_count": "새 횟수:", "apply": "선택 항목에 적용", "group_fallback": "업적 그룹 {group_id}", "updated": "업적 그룹 {group_id} 업데이트: 단계 {step}, 횟수 {count}"},
+    "equipment_page": {"character_filter": "캐릭터:", "all_equipment": "모든 장비", "no_mounted_equipment": "이 캐릭터는 현재 장비를 착용하지 않았습니다"}
+  },
+  "de": {
+    "disclaimer": {"title": "DSSaveEditor - TGSWYH-Ausgabe", "disclaimer": "Dieser Editor basiert auf dem Open-Source-Projekt DSSaveEditor von noobdawn.\nOriginalprojekt: https://github.com/noobdawn/DSSaveEditor", "free": "Diese Version ergänzt eine Erfolgsseite, die Anzeige und Bearbeitung angelegter Ausrüstung nach Charakter sowie verbesserte Datennamen und Zielanzeigen.\nBearbeitet von: TGSWYH", "understand": "Editor öffnen"},
+    "nav": {"achievement": "Erfolge"},
+    "achievement_page": {"title": "Erfolge", "hint": "Änderungen bleiben im Speicher, bis Sie in der Werkzeugleiste auf „Änderungen speichern“ klicken.", "name": "Name", "group_id": "Gruppen-ID", "step": "Stufe", "count": "Aktueller Zähler", "target": "Ziel", "new_step": "Neue Stufe:", "new_count": "Neuer Zähler:", "apply": "Auf Auswahl anwenden", "group_fallback": "Erfolgsgruppe {group_id}", "updated": "Erfolgsgruppe {group_id} aktualisiert: Stufe {step}, Zähler {count}"},
+    "equipment_page": {"character_filter": "Charakter:", "all_equipment": "Alle Ausrüstung", "no_mounted_equipment": "Dieser Charakter trägt derzeit keine Ausrüstung"}
+  },
+  "fr": {
+    "disclaimer": {"title": "DSSaveEditor - Édition TGSWYH", "disclaimer": "Cet éditeur est une modification du projet open source DSSaveEditor de noobdawn.\nProjet d'origine : https://github.com/noobdawn/DSSaveEditor", "free": "Cette version ajoute une page de succès, l'affichage et la modification de l'équipement porté par personnage, ainsi que des noms de données et objectifs améliorés.\nModifié par : TGSWYH", "understand": "Ouvrir l'éditeur"},
+    "nav": {"achievement": "Succès"},
+    "achievement_page": {"title": "Succès", "hint": "Les modifications restent en mémoire jusqu'à ce que vous cliquiez sur « Enregistrer les modifications » dans la barre d'outils.", "name": "Nom", "group_id": "ID du groupe", "step": "Étape", "count": "Compteur actuel", "target": "Objectif", "new_step": "Nouvelle étape :", "new_count": "Nouveau compteur :", "apply": "Appliquer à la sélection", "group_fallback": "Groupe de succès {group_id}", "updated": "Groupe de succès {group_id} mis à jour : étape {step}, compteur {count}"},
+    "equipment_page": {"character_filter": "Personnage :", "all_equipment": "Tout l'équipement", "no_mounted_equipment": "Ce personnage ne porte actuellement aucun équipement"}
+  },
+  "es_ES": {
+    "disclaimer": {"title": "DSSaveEditor - Edición TGSWYH", "disclaimer": "Este editor es una modificación del proyecto de código abierto DSSaveEditor de noobdawn.\nProyecto original: https://github.com/noobdawn/DSSaveEditor", "free": "Esta versión añade una página de logros, la visualización y edición del equipo equipado por personaje y mejoras en los nombres de datos y objetivos.\nModificado por: TGSWYH", "understand": "Abrir el editor"},
+    "nav": {"achievement": "Logros"},
+    "achievement_page": {"title": "Logros", "hint": "Los cambios permanecen en memoria hasta que pulses «Guardar cambios» en la barra de herramientas.", "name": "Nombre", "group_id": "ID de grupo", "step": "Etapa", "count": "Contador actual", "target": "Objetivo", "new_step": "Nueva etapa:", "new_count": "Nuevo contador:", "apply": "Aplicar a la selección", "group_fallback": "Grupo de logros {group_id}", "updated": "Grupo de logros {group_id} actualizado: etapa {step}, contador {count}"},
+    "equipment_page": {"character_filter": "Personaje:", "all_equipment": "Todo el equipo", "no_mounted_equipment": "Este personaje no lleva equipo actualmente"}
+  },
+  "pt_BR": {
+    "disclaimer": {"title": "DSSaveEditor - Edição TGSWYH", "disclaimer": "Este editor é uma modificação do projeto de código aberto DSSaveEditor, de noobdawn.\nProjeto original: https://github.com/noobdawn/DSSaveEditor", "free": "Esta versão adiciona uma página de conquistas, visualização e edição dos equipamentos usados por personagem e melhorias nos nomes de dados e objetivos.\nModificado por: TGSWYH", "understand": "Abrir o editor"},
+    "nav": {"achievement": "Conquistas"},
+    "achievement_page": {"title": "Conquistas", "hint": "As alterações permanecem na memória até você clicar em 'Salvar alterações' na barra de ferramentas.", "name": "Nome", "group_id": "ID do grupo", "step": "Etapa", "count": "Contagem atual", "target": "Meta", "new_step": "Nova etapa:", "new_count": "Nova contagem:", "apply": "Aplicar à seleção", "group_fallback": "Grupo de conquistas {group_id}", "updated": "Grupo de conquistas {group_id} atualizado: etapa {step}, contagem {count}"},
+    "equipment_page": {"character_filter": "Personagem:", "all_equipment": "Todos os equipamentos", "no_mounted_equipment": "Este personagem não está usando equipamentos"}
+  },
+  "ru": {
+    "disclaimer": {"title": "DSSaveEditor — версия TGSWYH", "disclaimer": "Этот редактор создан на основе проекта DSSaveEditor с открытым исходным кодом от noobdawn.\nИсходный проект: https://github.com/noobdawn/DSSaveEditor", "free": "В этой версии добавлена страница достижений, просмотр и изменение экипировки выбранного персонажа, а также улучшены названия данных и отображение целей.\nАвтор изменений: TGSWYH", "understand": "Открыть редактор"},
+    "nav": {"achievement": "Достижения"},
+    "achievement_page": {"title": "Достижения", "hint": "Изменения хранятся в памяти до нажатия «Сохранить изменения» на панели инструментов.", "name": "Название", "group_id": "ID группы", "step": "Этап", "count": "Текущее значение", "target": "Цель", "new_step": "Новый этап:", "new_count": "Новое значение:", "apply": "Применить к выбранному", "group_fallback": "Группа достижений {group_id}", "updated": "Группа достижений {group_id} обновлена: этап {step}, значение {count}"},
+    "equipment_page": {"character_filter": "Персонаж:", "all_equipment": "Всё снаряжение", "no_mounted_equipment": "На этом персонаже сейчас нет снаряжения"}
+  },
+  "th": {
+    "disclaimer": {"title": "DSSaveEditor - รุ่นแก้ไขโดย TGSWYH", "disclaimer": "โปรแกรมนี้แก้ไขจากโครงการโอเพนซอร์ส DSSaveEditor ของ noobdawn\nโครงการต้นฉบับ: https://github.com/noobdawn/DSSaveEditor", "free": "รุ่นนี้เพิ่มหน้า Achievement การดูและแก้ไขอุปกรณ์ที่ตัวละครสวมใส่ และปรับปรุงชื่อข้อมูลกับการแสดงเป้าหมาย\nผู้แก้ไข: TGSWYH", "understand": "เปิดโปรแกรม"},
+    "nav": {"achievement": "ความสำเร็จ"},
+    "achievement_page": {"title": "ความสำเร็จ", "hint": "การแก้ไขจะเก็บไว้ในหน่วยความจำจนกว่าจะคลิก 'บันทึกการแก้ไข' บนแถบเครื่องมือ", "name": "ชื่อ", "group_id": "ID กลุ่ม", "step": "ขั้น", "count": "จำนวนปัจจุบัน", "target": "เป้าหมาย", "new_step": "ขั้นใหม่:", "new_count": "จำนวนใหม่:", "apply": "ใช้กับรายการที่เลือก", "group_fallback": "กลุ่มความสำเร็จ {group_id}", "updated": "อัปเดตกลุ่มความสำเร็จ {group_id}: ขั้น {step}, จำนวน {count}"},
+    "equipment_page": {"character_filter": "ตัวละคร:", "all_equipment": "อุปกรณ์ทั้งหมด", "no_mounted_equipment": "ตัวละครนี้ยังไม่ได้สวมใส่อุปกรณ์"}
+  }
+}
